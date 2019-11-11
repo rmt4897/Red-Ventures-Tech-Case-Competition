@@ -21,14 +21,16 @@
 		</div>
 		<div class="slideshow">
 			<div class="slideshow-container">
-				<div class="slideshow-object one">
+				<div class="slideshow-object active" onclick="javascript:swapFeatured(0);">
 					<div class="featured-image">
+						<div class="featured-image-overlay"></div>
 						<img src="https://m.media-amazon.com/images/M/MV5BN2I1MGQ2ZjMtMjc1My00YzU1LThjNzktNzJlMWRkMTc0NjZhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg" alt="Yeet">
 					</div>
 					<div class="featured-information">
-						<div class="featured-title">
+						<a href="" class="featured-title">
 							Tile 1
-						</div>
+						</a>
+						<br>
 						<br>
 						<div class="featured-rating">
 							R
@@ -40,14 +42,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="slideshow-object two">
+				<div class="slideshow-object inactive" onclick="javascript:swapFeatured(1);">
 					<div class="featured-image">
+						<div class="featured-image-overlay"></div>
 						<img src="https://m.media-amazon.com/images/M/MV5BN2I1MGQ2ZjMtMjc1My00YzU1LThjNzktNzJlMWRkMTc0NjZhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg" alt="Yeet">
 					</div>
 					<div class="featured-information">
-						<div class="featured-title">
+						<a href="" class="featured-title">
 							Tile 1
-						</div>
+						</a>
+						<br>
 						<br>
 						<div class="featured-rating">
 							R
@@ -58,14 +62,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="slideshow-object three">
-					<div class="featured-image">
+				<div class="slideshow-object inactive" onclick="javascript:swapFeatured(2);">
+					<div href="" class="featured-image">
+						<div class="featured-image-overlay"></div>
 						<img src="https://m.media-amazon.com/images/M/MV5BN2I1MGQ2ZjMtMjc1My00YzU1LThjNzktNzJlMWRkMTc0NjZhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg" alt="Yeet">
 					</div>
 					<div class="featured-information">
-						<div class="featured-title">
+						<a class="featured-title">
 							Tile 1
-						</div>
+						</a>
+						<br>
 						<br>
 						<div class="featured-rating">
 							R
@@ -78,5 +84,8 @@
 				</div>
 			</div>
 		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="home_javascript.js"></script>
 	</body>
 </html>
