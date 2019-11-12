@@ -1,0 +1,41 @@
+.main-container {
+	width: 100%;
+	height: 100%;
+}
+
+.filter-panel {
+	width: 400px;
+	height: 100%;
+	background: #dd2525;
+	overflow: hidden;
+}
+
+.filters {
+	width: 100%;
+	height: 100%;
+	padding-top: 50%;
+	overflow: hidden;
+}
+
+.filter-header {
+	padding-left: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.filters-container {
+	width: 100%;
+	height: 100%;
+	border-top: solid 2px white;
+	overflow: hidden;
+	padding-top: 20px;
+	padding-left: 45px;
+}
+
+.filters-container>label {
+	font-size: 20px;
+}
+
+.filters-container>div {
+	margin-top: 10px;
+}
