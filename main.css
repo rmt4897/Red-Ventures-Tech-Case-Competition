@@ -1,0 +1,7 @@
+#production-filter-display {
+    overflow: scroll;
+    height: 150px;
+    border: 5px;
+    border-color: black;
+    border-style: solid;
+}
