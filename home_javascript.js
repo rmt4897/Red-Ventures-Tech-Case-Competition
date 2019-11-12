@@ -6,6 +6,9 @@ var slideshowElements;
 // The current index in the array that the slideshow is on
 var currentIndex = 0;
 
+// Slideshow update timer
+var timer;
+
 // Function moveActiveFrame
 // Increases current index and moves the slideshow forward
 function moveActiveFrame() {
@@ -25,13 +28,18 @@ $(function() {
 	slideshowElements = document.getElementsByClassName("slideshow-object");
 
 	// Run the moveActiveFrame function every 5 seconds
-	setInterval(moveActiveFrame, 5000);
+	timer = setInterval(moveActiveFrame, 5000);
 });
 
 // Function swapFeatured
 // Param - index: the index of which to change the slideshow to
 // Changes the active slide on the slideshow
 function swapFeatured(index) {
+
+	// Reset timer when slideshow is updated
+	clearInterval(timer);
+	timer = setInterval(moveActiveFrame, 5000);
+
 	currentIndex = index;
 
 	// Make all slides inactive
