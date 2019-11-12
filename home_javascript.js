@@ -1,7 +1,22 @@
 var slideshowElements;
+var currentIndex = 0;
+
+function moveActiveFrame() {
+	currentIndex++;
+
+	if (currentIndex == slideshowElements.length) {
+		currentIndex = 0;
+	}
+
+	swapFeatured(currentIndex);
+
+	setTimeout(moveActiveFrame, 5000);
+}
 
 $(function() {
-	slideshowElements = document.getElementsByClassName("slideshow-object")
+	slideshowElements = document.getElementsByClassName("slideshow-object");
+
+	setTimeout(moveActiveFrame, 5000);
 });
 
 function swapFeatured(index) {
