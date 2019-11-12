@@ -12,11 +12,22 @@ var uniqueProductionMovieArray = [];
 // creates checkboxes and labels of production companies
 function productionCompanySearch() {
   for (let i = 0; i < allMovieProductions.length; i++) {
-    var display = document.getElementById('production-filter-display')
+    $(".production-companies").appendChild()
     var checkbox = document.createElement("input");
     var label = document.createElement("label");
-    var br = document.createElement("br")
+    var br = document.createElement("br");
+    var prettyDiv = document.createElement("div");
+
+    <div class="pretty p-icon p-round">
+						<input type="checkbox" />
+						<div class="state">
+						<i class="icon mdi mdi-check"></i>
+            <label>Purple</label>
+        </div>
+    </div>
+
     label.innerHTML = allMovieProductions[i];
+    
 
     checkbox.setAttribute("name", "production-checkbox-name")
     checkbox.setAttribute("value", allMovieProductions[i])
@@ -24,9 +35,9 @@ function productionCompanySearch() {
     checkbox.setAttribute("type", "checkbox")
     checkbox.setAttribute("class", "production-checkboxes")
 
-    display.appendChild(checkbox);
-    display.appendChild(label);
-    display.appendChild(br);
+    prettyDiv.appendChild(checkbox);
+    prettyDiv.appendChild(label);
+    prettyDiv.appendChild(br);
   }
 
   $(".production-checkboxes").click(function () {
