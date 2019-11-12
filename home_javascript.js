@@ -9,14 +9,12 @@ function moveActiveFrame() {
 	}
 
 	swapFeatured(currentIndex);
-
-	setTimeout(moveActiveFrame, 5000);
 }
 
 $(function() {
 	slideshowElements = document.getElementsByClassName("slideshow-object");
 
-	setTimeout(moveActiveFrame, 5000);
+	setInterval(moveActiveFrame, 5000);
 });
 
 function swapFeatured(index) {
