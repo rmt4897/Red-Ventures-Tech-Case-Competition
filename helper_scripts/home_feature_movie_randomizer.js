@@ -1,8 +1,10 @@
-/* global loadImages */
+/* global loadData */
 
 var r_movies = [];      // declaring blank array for movies
 var request = new XMLHttpRequest();     // ...***...***...
+
 request.open('GET', 'https://casecomp.konnectrv.io/movie', true);   // ...***...***...
+
 request.onload = function () {    // ...***...***...
   // Begin accessing JSON data here
   var data = JSON.parse(this.response) // api data about all movies stored into 'data'
@@ -24,7 +26,7 @@ request.onload = function () {    // ...***...***...
         return (movie_b.vote_avg - movie_a.vote_avg); // sorting in descending order
     }
     r_movies.sort(sort_helper); // sort function call
-	loadImages();
+	loadData();
     //console.log(r_movies);
 
 }

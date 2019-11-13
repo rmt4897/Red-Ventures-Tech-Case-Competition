@@ -22,7 +22,7 @@ function moveActiveFrame() {
 	swapFeatured(currentIndex);
 }
 
-function loadImages() {
+function loadData() {
 	for (var i=0;i<slideshowElements.length;i++) {
 		var object = get_featured_movies(i);
 		slideshowElements[i].children[1].children[0].innerHTML = object.name;
