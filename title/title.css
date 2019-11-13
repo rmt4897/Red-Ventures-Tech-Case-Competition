@@ -1,3 +1,67 @@
+.main-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+.poster-container {
+	width: 35%;
+	height: 100%;
+}
+
 .poster-image {
-	background: url('https://m.media-amazon.com/images/M/MV5BN2I1MGQ2ZjMtMjc1My00YzU1LThjNzktNzJlMWRkMTc0NjZhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg');
+	width: 100%;
+	height: 100%;
+	background: url('https://m.media-amazon.com/images/M/MV5BN2I1MGQ2ZjMtMjc1My00YzU1LThjNzktNzJlMWRkMTc0NjZhXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,675,1000_AL_.jpg') !important;
+	animation-name: yeet !important;
+	-webkit-animation-name: yeet !important;
+}
+
+.information, .extra-information {
+	margin-left: 50px;
+	height: 50%;
+	position: relative;
+	top: 25%;
+	width: 20%;
+}
+
+.extra-information {
+	top: 28.65%;
+	text-align: right;
+	font-size: 18px;
+}
+
+.extra-information>a {
+	color: white;
+	font-size: 15px;
+}
+
+.title {
+	font-size: 50px;
+	color: white;
+	font-family: serif;
+}
+
+.rating {
+	display:inline-block;
+	text-align: center;
+	font-size: 20px;
+	background: gray;
+	border-radius: 50px;
+	padding: 5px;
+}
+
+.overview {
+	font-size: 18px;
+	line-height: 200%;
+	width: 100%;
+}
+
+.production-companies, .streaming-platforms {
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.voting-container {
+	color: rgba(255, 255, 255, 0.6);
 }
