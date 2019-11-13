@@ -6,5 +6,8 @@
 
 	header('Content-Type: text/html');
 	$string = file_get_contents($url);
-	echo $string;
+	$first_step = explode( '<div class="poster">' , $string);
+	$second_step = explode("</div>" , $first_step[1] );
+
+	echo $second_step[0];
 ?>
