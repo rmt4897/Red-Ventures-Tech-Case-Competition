@@ -1,6 +1,7 @@
 // requests for getting data from API to create checkboxes
 var request = new XMLHttpRequest();
 var request2 = new XMLHttpRequest();
+var requestFillerMovies = new XMLHttpRequest();
 
 // holds the Production Companies
 var allMovieProductions = [];
@@ -12,43 +13,13 @@ var tempProductionMovie = []
 var tempPlatformMovie = [];
 // final array that holds values that are in both filters
 var finalMovieArray = [];
+// filler (at start) array
+var fillerMovieArray = [];
 
-// loads every movie for finalMovieArray Onload
-$(document).ready(function () {
-  var onloadRequest = new XMLHttpRequest();
-  onloadRequest.open('GET', 'https://casecomp.konnectrv.io/movie', true)
-  onloadRequest.onload = function () {
-    // Begin accessing JSON data here
-    var data = JSON.parse(this.response)
+//This variables changes when the movies or shows tab is clicked - it will load different things depending on what tab is clicked
+var dataToFetch = "movie";
 
-    data.forEach(movie => {
-      finalMovieArray = data;
-    })
-    movieDisplay();
 
-  }
-  onloadRequest.send();
-});
-
-// this array holds the imbd ID's of the filtered ID's
-var uniqueProduction = [];
-
-// gets the data to dynamically create production company checkboxes
-request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
-request.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
-
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      allMovieProductions = data;
-    })
-    productionMovieCheckboxes();
-  } else {
-    console.log('error')
-  }
-}
-request.send();
 
 // uses API to create checkboxesf production companies
 function productionMovieCheckboxes() {
@@ -74,22 +45,6 @@ function productionMovieCheckboxes() {
 
   });
 }
-
-// gets data using API for movie platform checkboxes
-request2.open('GET', 'https://casecomp.konnectrv.io/platform/movie', true)
-request2.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
-  if (request2.status >= 200 && request2.status < 400) {
-    data.forEach(movie => {
-      allMoviePlatforms = data;
-    })
-    platformMovieCheckboxes();
-  } else {
-    console.log('error')
-  }
-}
-request2.send();
 
 // display the movie platform checkboxes 
 function platformMovieCheckboxes() {
@@ -144,7 +99,7 @@ function movieDisplay() {
       }
 
     }
-   
+
   } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
     finalMovieArray = tempPlatformMovie;
   } else if ($('.production-checkboxes').is(':checked') && !($('.platform-checkboxes').is(':checked'))) {
@@ -174,7 +129,7 @@ function updateMovieProductionFilters() {
 
       var request = new XMLHttpRequest()
 
-      request.open('GET', 'https://casecomp.konnectrv.io/movie?production=' + inputs[i].value, true);
+      request.open('GET', 'https://casecomp.konnectrv.io/' + dataToFetch + '?production=' + inputs[i].value, true);
 
 
       request.onload = function () {
@@ -204,7 +159,7 @@ function updateMoviePlatformFilters() {
     if (inputs[i].checked === true) {
       var platformRequest = new XMLHttpRequest()
 
-      platformRequest.open('GET', 'https://casecomp.konnectrv.io/movie?platform=' + inputs[i].value, true);
+      platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + dataToFetch + '?platform=' + inputs[i].value, true);
 
 
       platformRequest.onload = function () {
@@ -223,5 +178,58 @@ function updateMoviePlatformFilters() {
   }
 }
 
+
+// toggles between shows and movies
+
+$(".collection-filter-type").click(function () {
+  $(".production-companies").empty();
+  $(".streaming-platform").empty();
+
+  var ifMovieActive = document.getElementsByClassName('collection-filter')[0].getAttribute('class')
+  var ifShowActive = document.getElementsByClassName('collection-filter')[1].getAttribute('class')
+
+  if (ifMovieActive === "collection-filter active") {
+    dataToFetch = "movie"
+    console.log(dataToFetch)
+  } else if (ifShowActive === "collection-filter active") {
+    dataToFetch = "show"
+    console.log(dataToFetch)
+  }
+  
+  // gets the data to dynamically create production company checkboxes
+  request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
+  request.onload = function () {
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+
+    if (request.status >= 200 && request.status < 400) {
+      data.forEach(movie => {
+        allMovieProductions = data;
+      })
+      productionMovieCheckboxes();
+    } else {
+      console.log('error')
+    }
+  }
+  request.send();
+
+
+  // gets data using API for movie platform checkboxes
+request2.open('GET', 'https://casecomp.konnectrv.io/platform/' + dataToFetch, true)
+request2.onload = function () {
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response)
+  if (request2.status >= 200 && request2.status < 400) {
+    data.forEach(movie => {
+      allMoviePlatforms = data;
+    })
+    platformMovieCheckboxes();
+  } else {
+    console.log('error')
+  }
+}
+request2.send();
+
+})
 
 
