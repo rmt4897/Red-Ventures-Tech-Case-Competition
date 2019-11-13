@@ -3,7 +3,7 @@
 /* global get_one_recommended_movie */
 /* global get_one_recommended_show */
 
-var items;
+var items = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 $(function() {
 	items = document.getElementsByClassName("item");

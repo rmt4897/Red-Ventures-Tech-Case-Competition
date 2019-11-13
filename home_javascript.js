@@ -3,7 +3,7 @@
 /* global get_featured_movies */
 
 // Array of all elements contained in the slideshow
-var slideshowElements;
+var slideshowElements = [0, 0, 0];
 
 // The current index in the array that the slideshow is on
 var currentIndex = 0;
