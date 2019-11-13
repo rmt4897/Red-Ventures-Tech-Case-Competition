@@ -1,4 +1,6 @@
-/* global $*/
+/* global $ */
+/* global applyImdbThumbnail */
+/* global get_featured_movies */
 
 // Array of all elements contained in the slideshow
 var slideshowElements;
@@ -22,13 +24,24 @@ function moveActiveFrame() {
 	swapFeatured(currentIndex);
 }
 
+// Loads data onto the UI from the API
 function loadData() {
 	for (var i=0;i<slideshowElements.length;i++) {
 		var object = get_featured_movies(i);
+
 		slideshowElements[i].children[1].children[0].innerHTML = object.name;
 		slideshowElements[i].children[1].children[3].innerHTML = object.rating;
 		slideshowElements[i].children[1].children[6].innerHTML = object.desc;
+
+		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id, removeShine);
 	}
+}
+
+// Removes the shimmering effect and replaces it with the image
+function removeShine() {
+	$(slideshowElements[i].children[0].children[1]).removeClass("shine");
+	$(slideshowElements[i].children[0].children[1]).addClass("loaded");
+
 }
 
 // Run on script load

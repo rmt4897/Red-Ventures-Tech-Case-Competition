@@ -1,4 +1,4 @@
-function applyImdbThumbnail(div, isHome, id) {
+function applyImdbThumbnail(div, isHome, id, oncomplete) {
 	$.ajax({
 		url: "/helper_scripts/pull_site.php?url=https://www.imdb.com/title/" + id + "/",
 		type: 'GET',
@@ -12,10 +12,12 @@ function applyImdbThumbnail(div, isHome, id) {
 
 			if (isHome) {
 				img = img.replace("182,268", "675,1000");
-				img = img.replace(response.substring(img.indexOf("V1_")+3, img.indexOf("CR")), "SY1000_");
+				img = img.replace(img.substring(img.indexOf("_U")+1, img.indexOf("CR")), "SY1000_");
 			}
 
-			//div.style.background = "url(" + img ")";
+			$(div).css("background", "url(" + img + ")");
+
+			oncomplete();
 		}
 	});
 }
