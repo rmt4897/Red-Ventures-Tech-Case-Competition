@@ -1,60 +1,63 @@
-var request = new XMLHttpRequest()
+var request = new XMLHttpRequest();
+var request2 = new XMLHttpRequest();
 
 // holds the Production Companies
 var allMovieProductions = [];
+// holds the Streaming Platfomrs
+var allMoviePlatforms = [];
 
 // temporarily holds all the filter values of movie production company, changes time new checks are set
 var tempProductionMovie = []
 // holds values of tempProductionMovie unduplicated
 var uniqueProductionMovieArray = [];
 
-// gets the data to dynamically create checkboxes
-request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
-  request.onload = function () {
-    // Begin accessing JSON data here
-    var data = JSON.parse(this.response)
+// this array holds the imbd ID's of the filtered ID's
+var uniqueProduction = [];
 
-    if (request.status >= 200 && request.status < 400) {
-      data.forEach(movie => {
-        allMovieProductions = data;
-      })
-      console.log(allMovieProductions)
-      productionCompanySearch();
-    } else {
-      console.log('error')
-    }
+// gets the data to dynamically create production company checkboxes
+request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
+request.onload = function () {
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response)
+
+  if (request.status >= 200 && request.status < 400) {
+    data.forEach(movie => {
+      allMovieProductions = data;
+    })
+    console.log(allMovieProductions)
+    productionMovieCheckboxes();
+  } else {
+    console.log('error')
   }
+}
 request.send();
 
-// creates checkboxes and labels of production companies
-function productionCompanySearch() {
+// uses API to create checkboxesf production companies
+function productionMovieCheckboxes() {
   for (let i = 0; i < allMovieProductions.length; i++) {
-    // this is the checkbox
-    /*var checkbox = document.createElement("input");
-    checkbox.setAttribute("name", "production-checkbox-name")
-    checkbox.setAttribute("value", allMovieProductions[i])
-    checkbox.setAttribute("type", "checkbox")
-
-
-    // this will have the production company name
-    var label = document.getElementById("");
-    label.innerHTML = allMovieProductions[i];
-
-    // this is the checkbox pretty divider
-    var prettyDiv = document.createElement("div");
-    prettyDiv.setAttribute("class", "pretty p-default p-curve p-smooth")
-    prettyDiv.appendChild(checkbox);
-    prettyDiv.appendChild(label);
-*/
+    {
+      // this is the checkbox
+      /*var checkbox = document.createElement("input");
+      checkbox.setAttribute("name", "production-checkbox-name")
+      checkbox.setAttribute("value", allMovieProductions[i])
+      checkbox.setAttribute("type", "checkbox")
+  
+  
+      // this will have the production company name
+      var label = document.getElementById("");
+      label.innerHTML = allMovieProductions[i];
+  
+      // this is the checkbox pretty divider
+      var prettyDiv = document.createElement("div");
+      prettyDiv.setAttribute("class", "pretty p-default p-curve p-smooth")
+      prettyDiv.appendChild(checkbox);
+      prettyDiv.appendChild(label);
+  */
+    }
     var name = allMovieProductions[i];
-    console.log(allMovieProductions[i]);
     $(".production-companies").append("<div class='pretty p-default p-curve p-smooth'><input value=" + name + " type='checkbox' />" +
-    "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
-      
+      "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
   }
-  $(".production-companies").click(function () {
-    console.log("hi");
-  })
 
   // this will update the movies filter by production companies array and print it via user click
   $(".production-checkboxes").click(function () {
@@ -64,8 +67,6 @@ function productionCompanySearch() {
 
   });
 }
-
-
 
 // display movies of checked companies
 function productionMovieDisplay() {
@@ -83,7 +84,7 @@ function productionMovieDisplay() {
 
 }
 
-// updates the movie filters when checkbox is clicked
+// updates, using API, the movie filters when checkbox is clicked
 function updateMovieProductionFilters() {
   tempProductionMovie = [];
   uniqueProductionMovieArray = [];
@@ -91,8 +92,7 @@ function updateMovieProductionFilters() {
   var inputs = document.querySelectorAll("input.production-checkboxes");
 
 
-  // this puts all the selcted values in an array
-
+  // this puts all the selcted movie data avlues in an array
   for (let i = 0; i < inputs.length; i++) {
 
     if (inputs[i].checked === true) {
@@ -115,5 +115,44 @@ function updateMovieProductionFilters() {
     }
   }
 }
+
+// gets data using API for movie platform checkboxes
+request2.open('GET', 'https://casecomp.konnectrv.io/platform/movie', true)
+request2.onload = function () {
+  // Begin accessing JSON data here
+  var data = JSON.parse(this.response)
+  if (request2.status >= 200 && request2.status < 400) {
+    data.forEach(movie => {
+      allMoviePlatforms = data;
+    })
+    platformMovieCheckboxes();
+  } else {
+    console.log('error')
+  }
+}
+request2.send();
+
+// display the movie platform checkboxes 
+function platformMovieCheckboxes() {
+  for (let i = 0; i < allMoviePlatforms.length; i++) {
+    var name = allMoviePlatforms[i];
+    name = name.replace("_", " ")
+    name = titleCase(name)
+    $(".streaming-platform").append("<div class='pretty p-default p-curve p-smooth'><input value=" + name + " type='checkbox' />" +
+      "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
+  }
+}
+
+// convert to titleCase
+function titleCase(string) {
+  var createUpperCase = string.toLowerCase().split(" ");
+  for (var i = 0; i < createUpperCase.length; i++) {
+    createUpperCase[i] = createUpperCase[i][0].toUpperCase() + createUpperCase[i].slice(1);
+  }
+  createUpperCase = createUpperCase.join(" ");
+  return createUpperCase;
+}
+
+
 
 
