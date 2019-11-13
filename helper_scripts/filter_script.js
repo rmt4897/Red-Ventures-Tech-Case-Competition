@@ -8,43 +8,60 @@ var tempProductionMovie = []
 // holds values of tempProductionMovie unduplicated
 var uniqueProductionMovieArray = [];
 
+// gets the data to dynamically create checkboxes
+request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
+  request.onload = function () {
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+
+    if (request.status >= 200 && request.status < 400) {
+      data.forEach(movie => {
+        allMovieProductions = data;
+      })
+      console.log(allMovieProductions)
+      productionCompanySearch();
+    } else {
+      console.log('error')
+    }
+  }
+request.send();
 
 // creates checkboxes and labels of production companies
 function productionCompanySearch() {
   for (let i = 0; i < allMovieProductions.length; i++) {
-    $(".production-companies").appendChild()
-    var checkbox = document.createElement("input");
-    var label = document.createElement("label");
-    var br = document.createElement("br");
-    var prettyDiv = document.createElement("div");
-
-    <div class="pretty p-icon p-round">
-						<input type="checkbox" />
-						<div class="state">
-						<i class="icon mdi mdi-check"></i>
-            <label>Purple</label>
-        </div>
-    </div>
-
-    label.innerHTML = allMovieProductions[i];
-    
-
+    // this is the checkbox
+    /*var checkbox = document.createElement("input");
     checkbox.setAttribute("name", "production-checkbox-name")
     checkbox.setAttribute("value", allMovieProductions[i])
-
     checkbox.setAttribute("type", "checkbox")
-    checkbox.setAttribute("class", "production-checkboxes")
 
+
+    // this will have the production company name
+    var label = document.getElementById("");
+    label.innerHTML = allMovieProductions[i];
+
+    // this is the checkbox pretty divider
+    var prettyDiv = document.createElement("div");
+    prettyDiv.setAttribute("class", "pretty p-default p-curve p-smooth")
     prettyDiv.appendChild(checkbox);
     prettyDiv.appendChild(label);
-    prettyDiv.appendChild(br);
+*/
+    var name = allMovieProductions[i];
+    console.log(allMovieProductions[i]);
+    $(".production-companies").append("<div class='pretty p-default p-curve p-smooth'><input value=" + name + " type='checkbox' />" +
+    "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
+      
   }
+  $(".production-companies").click(function () {
+    console.log("hi");
+  })
 
+  // this will update the movies filter by production companies array and print it via user click
   $(".production-checkboxes").click(function () {
-      console.log("hi")
+    console.log("hi")
     updateMovieProductionFilters();
     productionMovieDisplay();
-    
+
   });
 }
 
@@ -52,7 +69,6 @@ function productionCompanySearch() {
 
 // display movies of checked companies
 function productionMovieDisplay() {
-  console.log("poo")
   $("#production-filter-movies").empty()
 
   for (let i = 0; i < tempProductionMovie.length; i++) {
@@ -101,19 +117,3 @@ function updateMovieProductionFilters() {
 }
 
 
-request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
-
-request.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
-
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      allMovieProductions = data;
-    })
-  } else {
-    console.log('error')
-  }
-}
-
-request.send()
