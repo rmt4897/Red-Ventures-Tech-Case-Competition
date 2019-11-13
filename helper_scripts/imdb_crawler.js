@@ -15,7 +15,7 @@ function applyImdbThumbnail(div, isHome, id) {
 				img = img.replace(response.substring(img.indexOf("V1_")+3, img.indexOf("CR")), "SY1000_");
 			}
 
-			div.style.background = "url(" + img ")";
+			//div.style.background = "url(" + img ")";
 		}
 	});
 }
