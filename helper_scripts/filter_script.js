@@ -32,7 +32,7 @@ request.onload = function () {
 }
 request.send();
 
-// creates checkboxes and labels of production companies
+// uses API to create checkboxesf production companies
 function productionMovieCheckboxes() {
   for (let i = 0; i < allMovieProductions.length; i++) {
     {
@@ -84,7 +84,7 @@ function productionMovieDisplay() {
 
 }
 
-// updates the movie filters when checkbox is clicked
+// updates, using API, the movie filters when checkbox is clicked
 function updateMovieProductionFilters() {
   tempProductionMovie = [];
   uniqueProductionMovieArray = [];
@@ -116,16 +116,15 @@ function updateMovieProductionFilters() {
   }
 }
 
+// gets data using API for movie platform checkboxes
 request2.open('GET', 'https://casecomp.konnectrv.io/platform/movie', true)
 request2.onload = function () {
   // Begin accessing JSON data here
   var data = JSON.parse(this.response)
-  console.log("hi")
   if (request2.status >= 200 && request2.status < 400) {
     data.forEach(movie => {
       allMoviePlatforms = data;
     })
-    console.log(allMoviePlatforms)
     platformMovieCheckboxes();
   } else {
     console.log('error')
@@ -133,27 +132,25 @@ request2.onload = function () {
 }
 request2.send();
 
-
+// display the movie platform checkboxes 
 function platformMovieCheckboxes() {
   for (let i = 0; i < allMoviePlatforms.length; i++) {
     var name = allMoviePlatforms[i];
     name = name.replace("_", " ")
     name = titleCase(name)
-
-    
-    console.log(name)
     $(".streaming-platform").append("<div class='pretty p-default p-curve p-smooth'><input value=" + name + " type='checkbox' />" +
       "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
   }
 }
 
+// convert to titleCase
 function titleCase(string) {
-  var sentence = string.toLowerCase().split(" ");
-  for (var i = 0; i < sentence.length; i++) {
-    sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+  var createUpperCase = string.toLowerCase().split(" ");
+  for (var i = 0; i < createUpperCase.length; i++) {
+    createUpperCase[i] = createUpperCase[i][0].toUpperCase() + createUpperCase[i].slice(1);
   }
-  sentence = sentence.join(" ");
-  return sentence;
+  createUpperCase = createUpperCase.join(" ");
+  return createUpperCase;
 }
 
 
