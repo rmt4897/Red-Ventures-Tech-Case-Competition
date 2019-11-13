@@ -53,7 +53,7 @@ $(function() {
 	slideshowElements = document.getElementsByClassName("slideshow-object");
 
 	// Run the moveActiveFrame function every 5 seconds
-	timer = setInterval(moveActiveFrame, 5000);
+	timer = setInterval(moveActiveFrame, 10000);
 });
 
 // Function swapFeatured
@@ -62,7 +62,7 @@ $(function() {
 function swapFeatured(index) {
 	// Reset timer when slideshow is updated
 	clearInterval(timer);
-	timer = setInterval(moveActiveFrame, 5000);
+	timer = setInterval(moveActiveFrame, 10000);
 
 	currentIndex = index;
 
