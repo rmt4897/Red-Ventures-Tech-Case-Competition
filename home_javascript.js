@@ -1,6 +1,7 @@
 /* global $ */
 /* global applyImdbThumbnail */
 /* global get_featured_movies */
+/* global removeShine */
 
 // Array of all elements contained in the slideshow
 var slideshowElements;
@@ -37,12 +38,6 @@ function loadData() {
 		// Call imdb_crawler to pull poster images
 		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id, removeShine);
 	}
-}
-
-// Removes the shimmering effect and replaces it with the image
-function removeShine(div) {
-	$(div).removeClass("shine");
-	$(div).addClass("loaded");
 }
 
 // Run on script load

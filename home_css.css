@@ -70,13 +70,6 @@
 	height: 100%;
 }
 
-.loaded {
-	background: url('');
-	background-repeat: no-repeat !important;
-	background-size: cover !important;
-	background-position: 50% 50% !important;
-}
-
 .featured-information {
 	margin-left: 50px;
 	height: 50%;

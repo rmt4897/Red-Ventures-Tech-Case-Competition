@@ -27,3 +27,9 @@ function applyImdbThumbnail(div, isHome, id, oncomplete) {
 		}
 	});
 }
+
+// Removes the shimmering effect and replaces it with the image
+function removeShine(div) {
+	$(div).removeClass("shine");
+	$(div).addClass("loaded");
+}
