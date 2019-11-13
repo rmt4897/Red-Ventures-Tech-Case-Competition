@@ -2,7 +2,6 @@
 /* global applyImdbThumbnail */
 /* global get_one_recommended_movie */
 /* global get_one_recommended_show */
-/* global removeShine */
 
 var items;
 
@@ -16,7 +15,7 @@ function loadMovies() {
 
 		items[i].children[0].children[1].children[0].innerHTML = object.name;
 
-		applyImdbThumbnail(items[i].children[0].children[0].children[0], false, object.id, removeShine);
+		applyImdbThumbnail(items[i].children[0].children[0].children[0], false, object.id);
 	}
 }
 
@@ -26,6 +25,6 @@ function loadShows() {
 
 		items[i+items.length/2-1].children[0].children[1].children[0].innerHTML = object.name;
 
-		applyImdbThumbnail(items[i].children[0].children[0].children[0], false, object.id, removeShine);
+		applyImdbThumbnail(items[i].children[0].children[0].children[0], false, object.id);
 	}
 }

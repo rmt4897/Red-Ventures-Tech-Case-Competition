@@ -33,6 +33,6 @@ request.send(); // ...***...***...
 // these functions need to be tinkered with ...***... (just like in the rec. movie file)
 
 // returns 1 movie at specified index
-function get_one_recommended_movie(index) {
+function get_one_recommended_show(index) {
     return _shows[index];
 }

@@ -2,8 +2,7 @@
 // Param - div: The div to change the background image too
 // Param - isHome: boolean if the current page is the home page or not
 // Param - id: The imdb ID of the movie/show that needs the thumbnail pulled
-// Param - oncomplete: The function to call once the images are done being pulled
-function applyImdbThumbnail(div, isHome, id, oncomplete) {
+function applyImdbThumbnail(div, isHome, id) {
 	// Send ajax GET request to php script with the imdb url
 	$.ajax({
 		url: "/helper_scripts/pull_site.php?url=https://www.imdb.com/title/" + id + "/",
@@ -22,8 +21,8 @@ function applyImdbThumbnail(div, isHome, id, oncomplete) {
 			// Update the background of the div with the pulled image
 			$(div).css("background", "url(" + img + ")");
 
-			// Call the oncomplete function passing the div that the image was applied to
-			oncomplete(div);
+			// Call the removeShine function passing the div that the image was applied to
+			removeShine(div);
 		}
 	});
 }
