@@ -1,10 +1,11 @@
 .main-container {
 	width: 100%;
 	height: 100%;
+	display: flex;
 }
 
 .filter-panel {
-	width: 400px;
+	width: 23%;
 	height: 100%;
 	background: #690000;
 	overflow: hidden;
@@ -50,4 +51,46 @@
 
 .filter-list {
 	margin-left: 20px;
+	height: 40%;
+	width: 80%;
+	overflow-y: auto;
+}
+
+.display-panel {
+	width: 77%;
+	height: 100%;
+}
+
+.collection-type-container {
+	width: 50%;
+	margin: auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+.collection-filter-type {
+	margin-top: 120px;
+	width: 50%
+}
+
+.collection-filter {
+	text-align: center;
+	text-transform: uppercase;
+	border-bottom: solid 0.5px gray;
+	height: 80px;
+	line-height: 80px;
+	cursor: pointer;
+	transition: border 200ms;
+	font-size: 15px;
+	font-family: proxima-nova,Helvetica,Arial,sans-serif;
+	font-weight: 700;
+	letter-spacing: 2px;
+}
+
+.collection-filter:hover {
+	border-bottom: solid 5px red;
+}
+
+.active {
+	border-bottom: solid 5px red;
 }
