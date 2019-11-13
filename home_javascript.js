@@ -22,6 +22,15 @@ function moveActiveFrame() {
 	swapFeatured(currentIndex);
 }
 
+function loadImages() {
+	for (var i=0;i<slideshowElements.length;i++) {
+		var object = get_featured_movies(i);
+		slideshowElements[i].children[1].children[0].innerHTML = object.name;
+		slideshowElements[i].children[1].children[3].innerHTML = object.rating;
+		slideshowElements[i].children[1].children[6].innerHTML = object.desc;
+	}
+}
+
 // Run on script load
 $(function() {
 	// Get all elements that are slideshow objects
@@ -35,7 +44,6 @@ $(function() {
 // Param - index: the index of which to change the slideshow to
 // Changes the active slide on the slideshow
 function swapFeatured(index) {
-
 	// Reset timer when slideshow is updated
 	clearInterval(timer);
 	timer = setInterval(moveActiveFrame, 5000);
