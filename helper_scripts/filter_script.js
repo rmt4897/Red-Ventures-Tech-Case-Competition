@@ -1,3 +1,4 @@
+// requests for getting data from API to create checkboxes
 var request = new XMLHttpRequest();
 var request2 = new XMLHttpRequest();
 
@@ -12,6 +13,22 @@ var tempPlatformMovie = [];
 // final array that holds values that are in both filters
 var finalMovieArray = [];
 
+// loads every movie for finalMovieArray Onload
+$(document).ready(function () {
+  var onloadRequest = new XMLHttpRequest();
+  onloadRequest.open('GET', 'https://casecomp.konnectrv.io/movie', true)
+  onloadRequest.onload = function () {
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+
+    data.forEach(movie => {
+      finalMovieArray = data;
+    })
+    movieDisplay();
+
+  }
+  onloadRequest.send();
+});
 
 // this array holds the imbd ID's of the filtered ID's
 var uniqueProduction = [];
@@ -43,12 +60,18 @@ function productionMovieCheckboxes() {
 
   // this will update the movies filter by production companies array and print it via user click
   $(".production-companies").click(function () {
+    $(".display-container").empty()
 
-    updateMovieProductionFilters();
+    if ($('.platform-checkboxes').is(':checked')) {
+      tempPlatformMovie = [];
+      updateMoviePlatformFilters();
+    }
+    // checks if the others are checked
+    if ($('.production-checkboxes').is(':checked')) {
+      tempProductionMovie = []
+      updateMovieProductionFilters();
+    }
 
-
-
-    tempProductionMovie = []
   });
 }
 
@@ -82,11 +105,17 @@ function platformMovieCheckboxes() {
 
   // this will update the movies filter by PLATFORM array and print it via user click
   $(".platform-checkboxes").click(function () {
-    updateMoviePlatformFilters();
+    $(".display-container").empty()
+    if ($('.platform-checkboxes').is(':checked')) {
+      tempPlatformMovie = [];
+      updateMoviePlatformFilters();
+    }
+    // checks if the others are checked
+    if ($('.production-checkboxes').is(':checked')) {
+      tempProductionMovie = []
+      updateMovieProductionFilters();
+    }
 
-
-
-    tempPlatformMovie = []
   });
 }
 
@@ -102,24 +131,32 @@ function titleCase(string) {
 
 // display movies of checked companies
 function movieDisplay() {
+  finalMovieArray = [];
   $(".display-container").empty()
-
-  if (tempPlatformMovie.length === 0) {
-    
-  } else if (tempProductionMovie.length === 0) {
-
-  } else {
+  if ($('.platform-checkboxes').is(':checked') && $('.production-checkboxes').is(':checked')) {
     for (let i = 0; i < tempProductionMovie.length; i++) {
+
       for (let j = 0; j < tempPlatformMovie.length; j++) {
         if (tempProductionMovie[i].title === tempPlatformMovie[j].title) {
           finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
+
         }
       }
+
     }
+   
+  } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
+    finalMovieArray = tempPlatformMovie;
+  } else if ($('.production-checkboxes').is(':checked') && !($('.platform-checkboxes').is(':checked'))) {
+    if (tempProductionMovie.length === 0) {
+      alert("This filter does not include any movies")
+    } else {
+      finalMovieArray = tempProductionMovie;
+    }
+  }
 
-    var name = finalMovieArray[i];
-
-    $(".display-container").append("<div class='biggest-div'> <div class='2nd-div'> <div class='3rd1-div'> <div class='movie-title-display'>" + name.title + "</div> </div> <div class='3rd2-div'> <div class='movie-overview-display'>" + name.overview + " </div> </div> </div></div><br><br>");
+  for (let i = 0; i < finalMovieArray.length; i++) {
+    $(".display-container").append("<div class='biggest-div'> <div class='2nd-div'> <div class='3rd1-div'> <div class='movie-title-display'>" + finalMovieArray[i].title + "</div> </div> <div class='3rd2-div'> <div class='movie-overview-display'>" + finalMovieArray[i].overview + " </div> </div> </div></div><br><br>");
   }
 
 }
@@ -130,9 +167,9 @@ function updateMovieProductionFilters() {
   var inputs = document.querySelectorAll("input.production-checkboxes");
 
 
-  // this puts all the selcted movie data avlues in an array
+  // this puts all the selcted movie data values in an array
   for (let i = 0; i < inputs.length; i++) {
-    tempProductionMovie = [];
+
     if (inputs[i].checked === true) {
 
       var request = new XMLHttpRequest()
@@ -144,10 +181,12 @@ function updateMovieProductionFilters() {
         // Begin accessing JSON data here
         var data = JSON.parse(this.response)
         tempProductionMovie = tempProductionMovie.concat(data)
-        console.log("tempProductionMovie")
+
+
         movieDisplay();
 
       }
+
       request.send();
 
 
@@ -162,9 +201,7 @@ function updateMoviePlatformFilters() {
 
   // this puts all the selcted movie data values in an array
   for (let i = 0; i < inputs.length; i++) {
-    tempPlatformMovie = [];
     if (inputs[i].checked === true) {
-      console.log(inputs[i].value)
       var platformRequest = new XMLHttpRequest()
 
       platformRequest.open('GET', 'https://casecomp.konnectrv.io/movie?platform=' + inputs[i].value, true);
@@ -174,8 +211,7 @@ function updateMoviePlatformFilters() {
         // Begin accessing JSON data here
         var data = JSON.parse(this.response)
         tempPlatformMovie = tempPlatformMovie.concat(data)
-        console.log("tempPlatformMovie")
-        console.log(tempPlatformMovie);
+
         movieDisplay()
 
 
