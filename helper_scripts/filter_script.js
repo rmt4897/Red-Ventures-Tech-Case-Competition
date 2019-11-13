@@ -63,22 +63,6 @@ function productionMovieCheckboxes() {
     $(".production-companies").append("<div class='pretty p-default p-curve p-smooth'><input value='" + name + "' type='checkbox' onmouseclick='updateMovieProductionFilters()'class='production-checkboxes' />" +
       "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
   }
-
-  // this will update the movies filter by production companies array and print it via user click
-  $(".production-companies").click(function () {
-    $(".display-container").empty()
-
-    if ($('.platform-checkboxes').is(':checked')) {
-      tempPlatformMovie = [];
-      updateMoviePlatformFilters();
-    }
-    // checks if the others are checked
-    if ($('.production-checkboxes').is(':checked')) {
-      tempProductionMovie = []
-      updateMovieProductionFilters();
-    }
-
-  });
 }
 
 // display the movie platform checkboxes 
@@ -92,21 +76,6 @@ function platformMovieCheckboxes() {
     $(".streaming-platform").append("<div class='pretty p-default p-curve p-smooth'><input value='" + name + "' class='platform-checkboxes' type='checkbox' />" +
       "<div class='state p-warning-o'><label>" + titleCaseName + "</label></div></div><br><br>");
   }
-
-  // this will update the movies filter by PLATFORM array and print it via user click
-  $(".platform-checkboxes").click(function () {
-    $(".display-container").empty()
-    if ($('.platform-checkboxes').is(':checked')) {
-      tempPlatformMovie = [];
-      updateMoviePlatformFilters();
-    }
-    // checks if the others are checked
-    if ($('.production-checkboxes').is(':checked')) {
-      tempProductionMovie = []
-      updateMovieProductionFilters();
-    }
-
-  });
 }
 
 // convert to titleCase
@@ -274,3 +243,33 @@ $(".collection-filter-type").click(function () {
 })
 
 
+// this will update the movies filter by production companies array and print it via user click
+$(".production-companies").click(function () {
+  $(".display-container").empty()
+
+  if ($('.platform-checkboxes').is(':checked')) {
+    tempPlatformMovie = [];
+    updateMoviePlatformFilters();
+  }
+  // checks if the others are checked
+  if ($('.production-checkboxes').is(':checked')) {
+    tempProductionMovie = []
+    updateMovieProductionFilters();
+  }
+
+});
+
+// this will update the movies filter by PLATFORM array and print it via user click
+$(".streaming-platform").click(function () {
+  $(".display-container").empty()
+  if ($('.platform-checkboxes').is(':checked')) {
+    tempPlatformMovie = [];
+    updateMoviePlatformFilters();
+  }
+  // checks if the others are checked
+  if ($('.production-checkboxes').is(':checked')) {
+    tempProductionMovie = []
+    updateMovieProductionFilters();
+  }
+
+});
