@@ -8,7 +8,7 @@ request.open('GET', 'https://casecomp.konnectrv.io/movie', true); // ...***...**
 request.onload = function() { // ...***...***...
     // Begin accessing JSON data here
     var data = JSON.parse(this.response) // api data about all movies stored into 'data'
-    for (i = 0; i < 5; i++) { // for loop for all the movies
+    for (i = 0; i < data.length; i++) { // for loop for all the movies
         var _movie = {
             name: data[i].title,             // saving movie name
             id: data[i].imdb,                   // saving imdb id
