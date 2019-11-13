@@ -1,27 +1,21 @@
-applyImdbThumbnail();
-
-function applyImdbThumbnail() {
+function applyImdbThumbnail(div, isHome) {
 	$.ajax({
-		url: "redventures.purple-techs.com/helper_scripts/pull_site.php?url=https://www.imdb.com/title/tt8110640/",
+		url: "/helper_scripts/pull_site.php?url=https://www.imdb.com/title/tt8110640/",
 		type: 'GET',
 		success: function(response) {
 			var html = $.parseHTML(response);
 
-			console.log(html);
+			console.log(response);
 
-			var posterElement = loopElementsSearchForPoster(html);
+			var img = response.replace(response.substring(0, response.indexOf("src=\"")+5), "");
+			img = img.substring(0, img.indexOf("\" />"));
 
-			console.log(posterElement.children[0].children[0]);
+			if (isHome) {
+				img = img.replace("182,268", "675,1000");
+				img = img.replace(response.substring(img.indexOf("V1_")+3, img.indexOf("CR")), "SY1000_");
+			}
+
+			div.style.background = "url(" + img ")";
 		}
 	});
-}
-
-function loopElementsSearchForPoster(array) {
-	for (var i=0;i<array.length;i++) {
-		if (array[i].className != "poster") {
-			return loopElementsSearchForPoster(array[i].children);
-		} else {
-			return array[i];
-		}
-	}
 }
