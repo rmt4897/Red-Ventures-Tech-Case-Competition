@@ -1,6 +1,3 @@
-// requests for getting data from API to create checkboxes
-var request = new XMLHttpRequest();
-var request2 = new XMLHttpRequest();
 
 // holds the Production Companies
 var allMovieProductions = [];
@@ -12,29 +9,21 @@ var tempProductionMovie = []
 var tempPlatformMovie = [];
 // final array that holds values that are in both filters
 var finalMovieArray = [];
+// unique array - derived from final Movie Array to get rid of duplicate values
+var uniqueArray = [];
+// filler (at start) array
+var fillerMovieArray = [];
 
-// loads every movie for finalMovieArray Onload
-$(document).ready(function () {
-  var onloadRequest = new XMLHttpRequest();
-  onloadRequest.open('GET', 'https://casecomp.konnectrv.io/movie', true)
-  onloadRequest.onload = function () {
-    // Begin accessing JSON data here
-    var data = JSON.parse(this.response)
+// this var checks if theres duplicates
+var isDuplicates = false;
 
-    data.forEach(movie => {
-      finalMovieArray = data;
-    })
-    movieDisplay();
 
-  }
-  onloadRequest.send();
-});
+//This variables changes when the movies or shows tab is clicked - it will load different things depending on what tab is clicked
+var dataToFetch = "movie";
 
-// this array holds the imbd ID's of the filtered ID's
-var uniqueProduction = [];
-
-// gets the data to dynamically create production company checkboxes
-request.open('GET', 'https://casecomp.konnectrv.io/production/movie', true)
+// loads the checkboxes at the beginning
+var request = new XMLHttpRequest();
+request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
 request.onload = function () {
   // Begin accessing JSON data here
   var data = JSON.parse(this.response)
@@ -49,34 +38,8 @@ request.onload = function () {
   }
 }
 request.send();
-
-// uses API to create checkboxesf production companies
-function productionMovieCheckboxes() {
-  for (let i = 0; i < allMovieProductions.length; i++) {
-    var name = allMovieProductions[i];
-    $(".production-companies").append("<div class='pretty p-default p-curve p-smooth'><input value='" + name + "' type='checkbox' onmouseclick='updateMovieProductionFilters()'class='production-checkboxes' />" +
-      "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
-  }
-
-  // this will update the movies filter by production companies array and print it via user click
-  $(".production-companies").click(function () {
-    $(".display-container").empty()
-
-    if ($('.platform-checkboxes').is(':checked')) {
-      tempPlatformMovie = [];
-      updateMoviePlatformFilters();
-    }
-    // checks if the others are checked
-    if ($('.production-checkboxes').is(':checked')) {
-      tempProductionMovie = []
-      updateMovieProductionFilters();
-    }
-
-  });
-}
-
-// gets data using API for movie platform checkboxes
-request2.open('GET', 'https://casecomp.konnectrv.io/platform/movie', true)
+var request2 = new XMLHttpRequest();
+request2.open('GET', 'https://casecomp.konnectrv.io/platform/' + dataToFetch, true)
 request2.onload = function () {
   // Begin accessing JSON data here
   var data = JSON.parse(this.response)
@@ -91,8 +54,20 @@ request2.onload = function () {
 }
 request2.send();
 
+
+
+// uses API to create checkboxesf production companies
+function productionMovieCheckboxes() {
+  for (let i = 0; i < allMovieProductions.length; i++) {
+    var name = allMovieProductions[i];
+    $(".production-companies").append("<div class='pretty p-default p-curve p-smooth'><input value='" + name + "' type='checkbox' onmouseclick='updateMovieProductionFilters()'class='production-checkboxes' />" +
+      "<div class='state p-warning-o'><label>" + name + "</label></div></div><br><br>");
+  }
+}
+
 // display the movie platform checkboxes 
 function platformMovieCheckboxes() {
+
   for (let i = 0; i < allMoviePlatforms.length; i++) {
     var name = allMoviePlatforms[i];
     var titleCaseName = name;
@@ -102,21 +77,6 @@ function platformMovieCheckboxes() {
     $(".streaming-platform").append("<div class='pretty p-default p-curve p-smooth'><input value='" + name + "' class='platform-checkboxes' type='checkbox' />" +
       "<div class='state p-warning-o'><label>" + titleCaseName + "</label></div></div><br><br>");
   }
-
-  // this will update the movies filter by PLATFORM array and print it via user click
-  $(".platform-checkboxes").click(function () {
-    $(".display-container").empty()
-    if ($('.platform-checkboxes').is(':checked')) {
-      tempPlatformMovie = [];
-      updateMoviePlatformFilters();
-    }
-    // checks if the others are checked
-    if ($('.production-checkboxes').is(':checked')) {
-      tempProductionMovie = []
-      updateMovieProductionFilters();
-    }
-
-  });
 }
 
 // convert to titleCase
@@ -132,19 +92,31 @@ function titleCase(string) {
 // display movies of checked companies
 function movieDisplay() {
   finalMovieArray = [];
+  uniqueArray = [];
   $(".display-container").empty()
+  // This huge if else statement will check which checkboxes are checked to know what to display 
   if ($('.platform-checkboxes').is(':checked') && $('.production-checkboxes').is(':checked')) {
     for (let i = 0; i < tempProductionMovie.length; i++) {
 
       for (let j = 0; j < tempPlatformMovie.length; j++) {
         if (tempProductionMovie[i].title === tempPlatformMovie[j].title) {
-          finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
+          for (let k = 0; k < tempPlatformMovie.length; k++) {
+            if (finalMovieArray[k] === tempProductionMovie[i]) {
+              isDuplicates = true;
+            }
+          }
+          if (isDuplicates === true) {
+            console.log('g')
+            finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
+            isDuplicates = false;
+          }
 
         }
+
       }
 
     }
-   
+
   } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
     finalMovieArray = tempPlatformMovie;
   } else if ($('.production-checkboxes').is(':checked') && !($('.platform-checkboxes').is(':checked'))) {
@@ -154,10 +126,37 @@ function movieDisplay() {
       finalMovieArray = tempProductionMovie;
     }
   }
+  // this will remove duplicates in the finalMovieArray
+  // var removeDupsArray = [];
+  // for (let i = 0; i < finalMovieArray.length; i++) {
+  //   removeDupsArray[removeDupsArray.length] = finalMovieArray[i].title;
+  // }
+  // var noDupsArray = [];
+  // $.each(removeDupsArray, function (i, el) {
+  //   if ($.inArray(el, noDupsArray) === -1) noDupsArray.push(el);
+  // });
 
+  // // this will hold values with no dupes for display
+  // var theMoviesDisplayed = [];
+  // // makes the final array  have no duplicates
+  // for (let i = 0; i < noDupsArray.length; i++) {
+  //   for (let j = 0; j < finalMovieArray.length; j++) {
+
+  //     if ((finalMovieArray[j].title === noDupsArray[i]) && !(theMoviesDisplayed.includes(finalMovieArray[j].title))) { // error here
+  //       console.log(theMoviesDisplayed.includes(finalMovieArray[j].title))
+  //       theMoviesDisplayed[theMoviesDisplayed.length] = finalMovieArray[j];
+
+  //     }
+  //   }
+
+  // }
+
+
+  // This will add the elements into the HTML
   for (let i = 0; i < finalMovieArray.length; i++) {
     $(".display-container").append("<div class='biggest-div'> <div class='2nd-div'> <div class='3rd1-div'> <div class='movie-title-display'>" + finalMovieArray[i].title + "</div> </div> <div class='3rd2-div'> <div class='movie-overview-display'>" + finalMovieArray[i].overview + " </div> </div> </div></div><br><br>");
   }
+
 
 }
 
@@ -174,7 +173,7 @@ function updateMovieProductionFilters() {
 
       var request = new XMLHttpRequest()
 
-      request.open('GET', 'https://casecomp.konnectrv.io/movie?production=' + inputs[i].value, true);
+      request.open('GET', 'https://casecomp.konnectrv.io/' + dataToFetch + '?production=' + inputs[i].value, true);
 
 
       request.onload = function () {
@@ -192,7 +191,7 @@ function updateMovieProductionFilters() {
 
     }
   }
-
+  tempProductionMovie = [];
 }
 
 // uses api to find all movies within a selected 
@@ -204,7 +203,7 @@ function updateMoviePlatformFilters() {
     if (inputs[i].checked === true) {
       var platformRequest = new XMLHttpRequest()
 
-      platformRequest.open('GET', 'https://casecomp.konnectrv.io/movie?platform=' + inputs[i].value, true);
+      platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + dataToFetch + '?platform=' + inputs[i].value, true);
 
 
       platformRequest.onload = function () {
@@ -221,7 +220,94 @@ function updateMoviePlatformFilters() {
 
     }
   }
+  tempPlatformMovie = [];
 }
 
 
+// toggles between shows and movies and updates the checkboxes
+$(".collection-filter-type").click(function () {
+  $(".production-companies").empty();
+  $(".streaming-platform").empty();
+  tempPlatformMovie = [];
+  tempProductionMovie = [];
+  var ifMovieActive = document.getElementsByClassName('collection-filter')[0].getAttribute('class')
+  var ifShowActive = document.getElementsByClassName('collection-filter')[1].getAttribute('class')
 
+  if (ifMovieActive === "collection-filter active") {
+    dataToFetch = "movie"
+    $(".display-container").empty();
+  } else if (ifShowActive === "collection-filter active") {
+    dataToFetch = "show"
+    $(".display-container").empty();
+
+  }
+  var request = new XMLHttpRequest();
+  // gets the data to dynamically create production company checkboxes
+  request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
+  request.onload = function () {
+
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+
+    if (request.status >= 200 && request.status < 400) {
+      data.forEach(movie => {
+        allMovieProductions = data;
+      })
+      productionMovieCheckboxes();
+    } else {
+      console.log('error')
+    }
+  }
+  request.send();
+
+  var request2 = new XMLHttpRequest();
+  // gets data using API for movie platform checkboxes
+  request2.open('GET', 'https://casecomp.konnectrv.io/platform/' + dataToFetch, true)
+  request2.onload = function () {
+
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+    if (request2.status >= 200 && request2.status < 400) {
+      data.forEach(movie => {
+        allMoviePlatforms = data;
+      })
+      platformMovieCheckboxes();
+    } else {
+      console.log('error')
+    }
+  }
+  request2.send();
+
+})
+
+// this will update the movies filter by PLATFORM array and print it via user click
+$(".platform-checkboxes").click(function () {
+  $(".display-container").empty()
+  if ($('.platform-checkboxes').is(':checked')) {
+    tempPlatformMovie = [];
+    updateMoviePlatformFilters();
+  }
+  // checks if the others are checked
+  if ($('.production-checkboxes').is(':checked')) {
+    tempProductionMovie = []
+    updateMovieProductionFilters();
+  }
+
+});
+
+
+// this will update the movies filter by production companies array and print it via user click
+$(".production-companies").click(function () {
+  $(".display-container").empty()
+
+  if ($('.platform-checkboxes').is(':checked')) {
+    tempPlatformMovie = [];
+    updateMoviePlatformFilters();
+  }
+  // checks if the others are checked
+  if ($('.production-checkboxes').is(':checked')) {
+    tempProductionMovie = []
+    updateMovieProductionFilters();
+  }
+
+});
