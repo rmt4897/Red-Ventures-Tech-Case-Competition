@@ -7,6 +7,8 @@ var requestFillerMovies = new XMLHttpRequest();
 var allMovieProductions = [];
 // holds the Streaming Platfomrs
 var allMoviePlatforms = [];
+// this array will hold default values
+var defaultFilms = [];
 
 // temporarily holds all the filter values of movie production company or platform, changes time new checks are set
 var tempProductionMovie = []
@@ -15,8 +17,7 @@ var tempPlatformMovie = [];
 var finalMovieArray = [];
 // unique array - derived from final Movie Array to get rid of duplicate values
 var uniqueArray = [];
-// filler (at start) array
-var fillerMovieArray = [];
+
 
 //This variables changes when the movies or shows tab is clicked - it will load different things depending on what tab is clicked
 var dataToFetch = "movie";
@@ -94,33 +95,47 @@ function movieDisplay() {
   uniqueArray = [];
   $(".display-container").empty()
   // This huge if else statement will check which checkboxes are checked to know what to display 
-  if ($('.platform-checkboxes').is(':checked') && $('.production-checkboxes').is(':checked')) {
-    for (let i = 0; i < tempProductionMovie.length; i++) {
-
-      for (let j = 0; j < tempPlatformMovie.length; j++) {
-        if (tempProductionMovie[i].title === tempPlatformMovie[j].title) {
-          finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
-
-        }
-        
-      }
-
+  if (!($('.production-checkboxes').is(':checked')) && !($('.platform-checkboxes').is(':checked'))) {
+    for (let i = 0; i < defaultFilms.length; i++) {
+      finalMovieArray[finalMovieArray.length] = defaultFilms[i];
     }
-
-  } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
-    finalMovieArray = tempPlatformMovie;
-  } else if ($('.production-checkboxes').is(':checked') && !($('.platform-checkboxes').is(':checked'))) {
-    if (tempProductionMovie.length === 0) {
-    } else {
-      finalMovieArray = tempProductionMovie;
+  } else {
+    if ($('.platform-checkboxes').is(':checked') && $('.production-checkboxes').is(':checked')) {
+      for (let i = 0; i < tempProductionMovie.length; i++) {
+        for (let j = 0; j < tempPlatformMovie.length; j++) {
+          if (tempProductionMovie[i].title === tempPlatformMovie[j].title) {
+            finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
+          }  
+        }
+      }
+    } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
+      finalMovieArray = tempPlatformMovie;
+    } else if ($('.production-checkboxes').is(':checked') && !($('.platform-checkboxes').is(':checked'))) {
+      if (tempProductionMovie.length === 0) {
+      } else {
+        finalMovieArray = tempProductionMovie;
+      }
     }
   }
-  // this will remove duplicates in the finalMovieArray
+  // create a function that removes duplicates
 
-
+  var list = [];
   
+  for (var i = 0; i < finalMovieArray.length; i++) {
+    var dup = false;
+    for (var j = 0; j < finalMovieArray.length; j++) {
+      if (finalMovieArray[i].title === finalMovieArray[j].title && i != j) {
+        dup = true;
+      }
+    }
+
+    if (!dup) {
+      list.push(finalMovieArray[i]);
+    }
+  }
+
   // This will add the elements into the HTML
-  for (let i = 0; i < finalMovieArray.length; i++) {
+  for (let i = 0; i < list.length; i++) {
     $(".display-container").append("<div class='biggest-div'> <div class='2nd-div'> <div class='3rd1-div'> <div class='movie-title-display'>" + finalMovieArray[i].title + "</div> </div> <div class='3rd2-div'> <div class='movie-overview-display'>" + finalMovieArray[i].overview + " </div> </div> </div></div><br><br>");
   }
 
@@ -192,6 +207,7 @@ function updateMoviePlatformFilters() {
 
 // toggles between shows and movies and updates the checkboxes
 $(".collection-filter-type").click(function () {
+ 
   $(".production-companies").empty();
   $(".streaming-platform").empty();
   var ifMovieActive = document.getElementsByClassName('collection-filter')[0].getAttribute('class')
@@ -240,6 +256,7 @@ $(".collection-filter-type").click(function () {
   }
   request2.send();
 
+  fetchAll();
 })
 
 
@@ -255,6 +272,11 @@ $(".production-companies").click(function () {
   if ($('.production-checkboxes').is(':checked')) {
     tempProductionMovie = []
     updateMovieProductionFilters();
+  }
+  
+  if (!($('.production-checkboxes').is(':checked')) && !($('.platform-checkboxes').is(':checked'))) {
+    tempPlatformMovie = [];
+    fetchAll();
   }
 
 });
@@ -272,4 +294,27 @@ $(".streaming-platform").click(function () {
     updateMovieProductionFilters();
   }
 
+  if (!($('.production-checkboxes').is(':checked')) && !($('.platform-checkboxes').is(':checked'))) {
+    defaultFilms = [];
+    fetchAll();
+  }
+
+});
+
+// this will display all of the movies at start, or if there are no filters selected
+function fetchAll() {
+  var fetchAll = new XMLHttpRequest()
+  fetchAll.open('GET', 'https://casecomp.konnectrv.io/' + dataToFetch, true);
+  fetchAll.onload = function () {
+    // Begin accessing JSON data here
+    var data = JSON.parse(this.response)
+    defaultFilms = defaultFilms.concat(data)
+    movieDisplay()
+  }
+  fetchAll.send();
+  defaultFilms = []
+}
+
+$(function () {
+  fetchAll();
 });
