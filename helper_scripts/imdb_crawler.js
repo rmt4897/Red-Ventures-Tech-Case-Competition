@@ -1,6 +1,6 @@
-function applyImdbThumbnail(div, isHome) {
+function applyImdbThumbnail(div, isHome, id) {
 	$.ajax({
-		url: "/helper_scripts/pull_site.php?url=https://www.imdb.com/title/tt8110640/",
+		url: "/helper_scripts/pull_site.php?url=https://www.imdb.com/title/" + id + "/",
 		type: 'GET',
 		success: function(response) {
 			var html = $.parseHTML(response);
