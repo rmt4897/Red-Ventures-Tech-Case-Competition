@@ -1,10 +1,9 @@
 /* global $ */
 /* global applyImdbThumbnail */
 /* global get_featured_movies */
-/* global removeShine */
 
 // Array of all elements contained in the slideshow
-var slideshowElements;
+var slideshowElements = [0, 0, 0];
 
 // The current index in the array that the slideshow is on
 var currentIndex = 0;
@@ -36,7 +35,7 @@ function loadData() {
 		slideshowElements[i].children[1].children[6].innerHTML = object.desc;
 
 		// Call imdb_crawler to pull poster images
-		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id, removeShine);
+		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id);
 	}
 }
 
