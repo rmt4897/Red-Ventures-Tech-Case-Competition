@@ -88,3 +88,10 @@ body {
 		background-position: 468px 0;
 	}
 }
+
+.loaded {
+	background: url('');
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-position: 50% 50% !important;
+}
