@@ -40,11 +40,9 @@ function loadData() {
 }
 
 // Removes the shimmering effect and replaces it with the image
-function removeShine() {
-	for (var i=0;i<slideshowElements.length;i++) {
-		$(slideshowElements[i].children[0].children[1]).removeClass("shine");
-		$(slideshowElements[i].children[0].children[1]).addClass("loaded");
-	}
+function removeShine(div) {
+	$(div).removeClass("shine");
+	$(div).addClass("loaded");
 }
 
 // Run on script load
