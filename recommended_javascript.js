@@ -23,8 +23,8 @@ function loadShows() {
 	for (var i=0;i<items.length/2;i++) {
 		var object = get_one_recommended_show(i);
 
-		items[i+items.length/2-1].children[0].children[1].children[0].innerHTML = object.name;
+		items[i+items.length/2].children[0].children[1].children[0].innerHTML = object.name;
 
-		applyImdbThumbnail(items[i].children[0].children[0].children[0], false, object.id);
+		applyImdbThumbnail(items[i+items.length/2].children[0].children[0].children[0], false, object.id);
 	}
 }
