@@ -25,9 +25,12 @@ request.onload = function() { // ...***...***...
 request.send(); // ...***...***...
 
 // these functions need to be tinkered with ...***...
+
+// returns all the movies, sorted by vote_avg (high to low)
 function get_all_recommended_movies() {
     return _movies;
 }
+// returns 1 movie at specified index
 function get_one_recommended_movie(index) {
     return _movies[index];
 }
