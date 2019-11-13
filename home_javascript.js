@@ -1,4 +1,6 @@
-/* global $*/
+/* global $ */
+/* global applyImdbThumbnail */
+/* global get_featured_movies */
 
 // Array of all elements contained in the slideshow
 var slideshowElements;
@@ -22,13 +24,25 @@ function moveActiveFrame() {
 	swapFeatured(currentIndex);
 }
 
-function loadImages() {
+// Loads data onto the UI from the API
+function loadData() {
 	for (var i=0;i<slideshowElements.length;i++) {
 		var object = get_featured_movies(i);
+
+		// Apply text updates
 		slideshowElements[i].children[1].children[0].innerHTML = object.name;
 		slideshowElements[i].children[1].children[3].innerHTML = object.rating;
 		slideshowElements[i].children[1].children[6].innerHTML = object.desc;
+
+		// Call imdb_crawler to pull poster images
+		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id, removeShine);
 	}
+}
+
+// Removes the shimmering effect and replaces it with the image
+function removeShine(div) {
+	$(div).removeClass("shine");
+	$(div).addClass("loaded");
 }
 
 // Run on script load
@@ -37,7 +51,7 @@ $(function() {
 	slideshowElements = document.getElementsByClassName("slideshow-object");
 
 	// Run the moveActiveFrame function every 5 seconds
-	timer = setInterval(moveActiveFrame, 5000);
+	timer = setInterval(moveActiveFrame, 10000);
 });
 
 // Function swapFeatured
@@ -46,7 +60,7 @@ $(function() {
 function swapFeatured(index) {
 	// Reset timer when slideshow is updated
 	clearInterval(timer);
-	timer = setInterval(moveActiveFrame, 5000);
+	timer = setInterval(moveActiveFrame, 10000);
 
 	currentIndex = index;
 
