@@ -125,7 +125,7 @@
 
 		$(document).ready(function () {
 			var typeOfFilm = type;
-			var imbdID = id;
+			var imdbID = id;
 			var dupInDatabase = false;
 			var comparisonFilmObject;
 
