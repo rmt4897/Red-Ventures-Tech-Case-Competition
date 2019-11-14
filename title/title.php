@@ -1,14 +1,22 @@
+<?php
+	$id = $_GET['id'];
+	$type = $_GET['type'];
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
 	<meta charset="utf-8">
-	<meta id="imdb_id" data="<?php echo $id ?>">
+	<meta id="movie-data" data="<?php echo $id ?>" type="<?php echo $type ?>">
 	<title>Name of the App</title>
 	<link rel="stylesheet" href="../css.css">
 	<link rel="stylesheet" href="title.css">
+	<script type="text/javascript">
+		var id = $("#movie-data").attr("data");
+		var type = $("#movie-data").attr("type");
+	</script>
 </head>
-
 <body>
 	<div class="nav-bar">
 		<div class="nav-container">
@@ -112,11 +120,11 @@
 		})
 
 		$(document).ready(function () {
-			var typeOfFilm = "movie";
-			var imbdID = "tt8110640"
+			var typeOfFilm = type;
+			var imbdID = id;
 
 
-			var platformRequest = new XMLHttpRequest()
+			var platformRequest = new XMLHttpRequest();
 			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imbdID, true);
 			platformRequest.onload = function () {
 				// Begin accessing JSON data here
