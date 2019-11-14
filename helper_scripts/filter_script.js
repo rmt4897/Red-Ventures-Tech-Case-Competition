@@ -135,7 +135,8 @@ function movieDisplay() {
 
   // This will add the elements into the HTML
   for (let i = 0; i < list.length; i++) {
-    $(".display-container").append("<div class='item'> <div class='item-image-container'> <div class='item-image-container'> <div class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + finalMovieArray[i].title + " </div> </div> </div></div><br><br>");
+	  console.log(finalMovieArray[i].imdb);
+    $(".display-container").append("<a href='title/title.php?id=" + finalMovieArray[i].imdb + "?type=" + dataToFetch + "' class='item'> <div class='item-image-container'> <div class='item-image-container'> <div class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + finalMovieArray[i].title + " </div> </div> </div></a><br><br>");
   }
 
 
@@ -324,11 +325,6 @@ function fetchAll() {
 
 $(function () {
   fetchAll();
-});
-
-// this will update the firebase'
-$('.item').click(function () {
-  console.log("hi")
 });
 
 // firebase config
