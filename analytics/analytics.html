@@ -64,30 +64,24 @@
 			});
 			// make accessible for debugging
 			layer = heatmapLayer;
-			location_data(testData);
-			layer.setData(masfy_api_data);
+
+			console.log(location_data(testData));
+			layer.setData(location_data(testData));
 		};
-		var masfy_api_data;
+
 		function location_data(our_data) {
-			masfy_api_data = {
-				max: 10000,
-				data: []
-			};
 			var api_array = [];
-			for (i = 0; i < our_data.data.length; i++) {
+
+			for (i = 0; i < our_data.length; i++) {
 				var newData = {
-					lat: our_data.data[i].lat,
-					lng: our_data.data[i].lng,
+					lat: our_data[i].latitude,
+					lng: our_data[i].longitude,
 					count: 1
 				};
 				api_array.push(newData);
 			}
-			masfy_api_data.data = api_array;
+			return { max: 10000, data: api_array };
 		}
-		var test = {}
-		loadData(test);
-
-		//console.log(masfy_api_data);
 	</script>
 </body>
 

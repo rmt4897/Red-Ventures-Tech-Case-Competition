@@ -32,17 +32,17 @@ $(document).ready(function() {
         snapshot.docs.forEach(doc => {
             arrayofShowData[arrayofShowData.length] = doc.data();
         })
-      
+
 
         sortedShows= sort_by_click_count(arrayofShowData);
-   
+
     })
 
     db.collection("MovieDataCollection").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             arrayofMovieData[arrayofMovieData.length] = doc.data();
         })
-        
+
 
         sortedMovies = sort_by_click_count(arrayofMovieData);
 
@@ -51,15 +51,9 @@ $(document).ready(function() {
     db.collection("VisitorLocation").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             arrayofGeolocation[arrayofGeolocation.length] = doc.data();
-        })
+        });
+		loadData(arrayofGeolocation);
+    });
 
 
-    })
-
-
-})
-
-
-
-
-
+});
