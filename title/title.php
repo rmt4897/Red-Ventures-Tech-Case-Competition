@@ -1,4 +1,5 @@
 <?php
+	# pull id and type from the URL
 	$id = $_GET['id'];
 	$type = $_GET['type'];
 ?>

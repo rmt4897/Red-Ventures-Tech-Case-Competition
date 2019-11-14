@@ -1,10 +1,13 @@
 <?php
+	# get type of media being loaded, movie/show
 	$type = $_GET['type'];
 
+	# if movie then add the active filter to movies
 	if (strcmp($type, "movie") == 0) {
 		$movies = "active";
 		$shows = "";
 	} else {
+		# otherwise make shows the active filter
 		$movies = "";
 		$shows = "active";
 	}
