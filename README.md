@@ -1,5 +1,8 @@
 # Red-Ventures-Tech-Case-Competition
 ### By Abhay Zala, David Lu, & Michael Tyndall
+* @davidlu51412
+* @aszala
+* @rmt4897
 
 So coding this was very tedious...
 We agreed to do a web app
@@ -23,7 +26,7 @@ We agreed to do a web app
     * dynamically created checkboxes for the filters by pulling individual elements from the API to reduce the amount of code written
     * utilized API for every movie/show, overview, rating, etc. that was displayed (nothing was hard-coded)
 
-##Reporting/Customer Acquisition:
+## Reporting/Customer Acquisition:
     * utilized a no-sql database (firestore) to log user interactions with the website - for instance, the database will dynamically generate a document in a collection in the database which stores the title, imdb, and "clickcount" of how man times that movie/show that was clicked on. (if the show/movie was clicked the first time, then it would create a new document, if the show/movie already existed, then we increase clickcount by 1)
     * implemented another page where business owners/analysts are able to visually see what is the most popular show/movie on the website (via the "clickcount" in the database) and see the location of the website users (via the heatmap)
 
@@ -37,4 +40,4 @@ We agreed to do a web app
     * Beautifully designed headers, slideshows, animations, reviews, images, etc.
 
 ## Presentation: 
-    **See you all there! :D**
+    See you all there! :D
