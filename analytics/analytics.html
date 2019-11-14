@@ -70,7 +70,18 @@
 		<br />Check out the full <a href="http://www.patrick-wied.at/static/heatmapjs/examples.html?utm_source=gh_local"
 			target="_blank">list of all heatmap.js examples</a> with more pointers &amp; inline documentation.
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
 
+	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
+
+
+	<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
 
 
 	<script>
@@ -138,6 +149,7 @@
 		loadData(test);
 
 		console.log(masfy_api_data);
+		
 	</script>
 </body>
 
