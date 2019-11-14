@@ -64,8 +64,8 @@
 						Movies
 					</div>
 				</div>
-				<div class="collection-filter-type  <?php echo $shows; ?>" onclick="javascript:swapActiveLargeFilter(1);">
-					<div class="collection-filter">
+				<div class="collection-filter-type" onclick="javascript:swapActiveLargeFilter(1);">
+					<div class="collection-filter <?php echo $shows; ?>">
 						Shows
 					</div>
 				</div>

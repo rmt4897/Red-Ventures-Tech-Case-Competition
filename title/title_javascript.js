@@ -25,8 +25,8 @@ function loadData(object) {
 
 	document.getElementById("information").children[9].innerHTML = streaming_platforms;
 	document.getElementById("information").children[12].innerHTML = object.desc;
-	document.getElementById("extra-information").children[4].children[0].innerHTML = object.vote_average;
-	document.getElementById("extra-information").children[4].children[2].innerHTML = object.vote_count;
+	document.getElementById("extra-information").children[4].children[0].innerHTML = object.vote_average + " / 10";
+	document.getElementById("extra-information").children[4].children[2].innerHTML = object.vote_count + " Votes";
 
 	if (type == "movie") {
 		document.getElementById("extra-information").children[6].children[0].innerHTML = object.date;

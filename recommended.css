@@ -8,6 +8,8 @@
 	margin: auto;
 }
 
+.main-container::-webkit-scrollbar { width: 0 !important }
+
 .header {
 	width: 100%;
 }
