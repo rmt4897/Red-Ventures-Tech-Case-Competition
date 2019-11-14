@@ -1,8 +1,8 @@
 /* global loadData */
 
 var r_movies = [];      // declaring blank array for movies
+var index_array = [-1, -1, -1]; // setting index values to -1 since we don't generate less than 0
 var request = new XMLHttpRequest();     // ...***...***...
-var num0, num1;
 request.open('GET', 'https://casecomp.konnectrv.io/movie', true);   // ...***...***...
 
 request.onload = function () {    // ...***...***...
@@ -11,19 +11,12 @@ request.onload = function () {    // ...***...***...
     for (i = 0; i < 3; i++) {  // for loop for 3 movies
         // gen. random number from 0 to total number of movies in api
         var x = Math.floor(Math.random() * data.length);
-        if (i = 0) { // if we're picking first movie
-            num0 = x; // assign x to num0 and continue to 'var _movie...'
-        } else if (i = 1) { // if picking second movie
-            while (x = num0) { // while random x = first movie's num0
-                x = Math.floor(Math.random() * data.length); // find another random number
-            } // end while
-            num1 = x; // since now x is a different movie, assign it to num1
-            // continue to 'var _movie...'
-        } else if (i = 2) { // picking 3rd movie
-            while ((num0 = x) || (num1 = x)) { // while 3rd movie index = first or second index
-                x = Math.floor(Math.random() * data.length); // find a new movie index
-            } // end while
-        } // done checking/garunteeing for unique movie indexs
+        /* while loop that just checks to see if 
+        we have used any of the index's already */
+        while (x == index_array[0] || x == index_array[1]) {
+            x = Math.floor(Math.random() * data.length); // if we have used it, we just gen. another and loop again
+        } // end while loop
+        index_array[i] = x; // saving unique index into array
         var _movie = {
             name: data[x].title,             // saving movie name
             date: data[x].release_date,      // "" release date

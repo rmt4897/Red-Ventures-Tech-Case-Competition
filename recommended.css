@@ -4,9 +4,12 @@
 
 .main-container {
 	width: 80%;
-	height: 100%;
+	height: 90%;
 	margin: auto;
+	overflow: auto;
 }
+
+.main-container::-webkit-scrollbar { width: 0 !important }
 
 .header {
 	width: 100%;

@@ -1,9 +1,9 @@
+/* global type, id */
+
 // blank file that will retrieve a movie or show
 // when a function is called with parameters
 // (var type, var id), where 'type' is either
 // "movie" or "show" and id is an imdb id
-
-/* global retrieve specific movie or show */
 
 var _media;  // global variable declaration
 
@@ -46,6 +46,11 @@ function media_by_type_and_id(_type, _id) { // function header, takes in 2 strin
     }
     request.send(); // ...***...***...
 }
+
+$(function() {
+	media_by_type_and_id(type, id);
+});
+
 // test function calls
 // media_by_type_and_id("movie", "tt8110640");
 // media_by_type_and_id("show", "tt1844624");

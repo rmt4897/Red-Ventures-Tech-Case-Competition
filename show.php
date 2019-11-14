@@ -1,25 +1,42 @@
+<?php
+	# get type of media being loaded, movie/show
+	$type = $_GET['type'];
+
+	# if movie then add the active filter to movies
+	if (strcmp($type, "movie") == 0) {
+		$movies = "active";
+		$shows = "";
+	} else {
+		# otherwise make shows the active filter
+		$movies = "";
+		$shows = "active";
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
 	<meta charset="utf-8">
-	<title>Name of Apps</title>
+	<meta id="initial-type" data="<?php echo $type; ?>">
+	<title>MASFY - Movies and Shows for You</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<link rel="stylesheet" href="css.css">
 	<link rel="stylesheet" href="show.css">
+	<link rel="shortcut icon" type="image/x-icon" href="imgs/favicon.ico">
 </head>
 
 <body>
 	<div class="nav-bar">
 		<div class="nav-container">
 			<div class="logo-container">
-
+				<a href="http://redventures.purple-techs.com"><img class="logo" src="imgs/logo.png"></a>
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
-				<a href="" class="nav-link">All Movies</a>
-				<a href="" class="nav-link">All Shows</a>
-				<a href="" class="nav-link">Recommended</a>
+				<a href="show.php?type=movie" class="nav-link">All Movies</a>
+				<a href="show.php?type=show" class="nav-link">All Shows</a>
+				<a href="recommended.html" class="nav-link">Recommended</a>
 			</div>
 		</div>
 	</div>
@@ -29,7 +46,7 @@
 			<div class="filters">
 				<div class="filter-header">
 					<h1>Filters</h1>
-					<img src="imgs/filter-outline.png" alt="">
+					<img src="imgs/filter-outline.png" alt="filter icon image">
 				</div>
 				<div class="filters-container">
 					<label for="production-companies">By Production Company:</label>
@@ -47,12 +64,12 @@
 		<div class="display-panel">
 			<div class="collection-type-container">
 				<div class="collection-filter-type">
-					<div class="collection-filter active" onclick="javascript:swapActiveLargeFilter(0);">
+					<div class="collection-filter <?php echo $movies; ?>" onclick="javascript:swapActiveLargeFilter(0);">
 						Movies
 					</div>
 				</div>
 				<div class="collection-filter-type" onclick="javascript:swapActiveLargeFilter(1);">
-					<div class="collection-filter">
+					<div class="collection-filter <?php echo $shows; ?>">
 						Shows
 					</div>
 				</div>
