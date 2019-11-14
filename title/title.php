@@ -111,17 +111,14 @@
 		firebase.initializeApp(firebaseConfig);
 		const db = firebase.firestore();
 
-		$(document).ready(function () {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function (position) {
+		navigator.geolocation.getCurrentPosition(function (position) {
+					console.log("hi	")
 					db.collection('VisitorLocation').add({
 						latitude: position.coords.latitude,
 						longitude: position.coords.longitude,
 					})
-					// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
 				});
-			}
-		})
+	
 
 		$(document).ready(function () {
 			var typeOfFilm = type;
