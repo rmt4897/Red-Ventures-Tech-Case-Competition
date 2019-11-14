@@ -101,6 +101,8 @@ body {
 	width: 200px;
 	height: 300px;
 	cursor: pointer;
+	color: white;
+	text-decoration: none;
 }
 
 .item-container,.item-image-container,.item-image {
