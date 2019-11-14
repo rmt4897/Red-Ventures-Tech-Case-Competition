@@ -8,14 +8,10 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta id="movie-data" data="<?php echo $id ?>" type="<?php echo $type ?>">
+	<meta id="movie-data" data="<?php echo $id; ?>" type="<?php echo $type; ?>">
 	<title>Name of the App</title>
 	<link rel="stylesheet" href="../css.css">
 	<link rel="stylesheet" href="title.css">
-	<script type="text/javascript">
-		var id = $("#movie-data").attr("data");
-		var type = $("#movie-data").attr("type");
-	</script>
 </head>
 <body>
 	<div class="nav-bar">
@@ -35,7 +31,7 @@
 		<div class="poster-container">
 			<div id="poster-image" class="poster-image shine"></div>
 		</div>
-		<div class="information">
+		<div id="information" class="information">
 			<a class="title">
 				Loading
 			</a>
@@ -58,7 +54,7 @@
 				Loading
 			</div>
 		</div>
-		<div class="extra-information">
+		<div id="extra-information" class="extra-information">
 			<a href="<?php echo 'https://www.imdb.com/title/' . $id . '/'; ?>">View on IMDB</a>
 			<hr>
 			<br><br>
@@ -81,8 +77,12 @@
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		var id = $("#movie-data").attr("data");
+		var type = $("#movie-data").attr("type");
+	</script>
 	<script type="text/javascript" charset="utf-8" src="../helper_scripts/imdb_crawler.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../helper_scripts/title_javascript.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../title/title_javascript.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../helper_scripts/get_movie_or_show_by_id.js"></script>
 	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
