@@ -1,4 +1,5 @@
 <?php
+	# pull id and type from the URL
 	$id = $_GET['id'];
 	$type = $_GET['type'];
 ?>
@@ -9,20 +10,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta id="movie-data" data="<?php echo $id; ?>" type="<?php echo $type; ?>">
-	<title>Name of the App</title>
+	<title>MASFY - Movies and Shows for You</title>
 	<link rel="stylesheet" href="../css.css">
 	<link rel="stylesheet" href="title.css">
+	<link rel="shortcut icon" type="image/x-icon" href="../imgs/favicon.ico">
 </head>
 <body>
 	<div class="nav-bar">
 		<div class="nav-container">
 			<div class="logo-container">
-
+				<a href="http://redventures.purple-techs.com"><img class="logo" src="../imgs/logo.png"></a>
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
-				<a href="../show.php?type=movies" class="nav-link">All Movies</a>
-				<a href="../show.php?type=shows" class="nav-link">All Shows</a>
+				<a href="../show.php?type=movie" class="nav-link">All Movies</a>
+				<a href="../show.php?type=show" class="nav-link">All Shows</a>
 				<a href="../recommended.html" class="nav-link">Recommended</a>
 			</div>
 		</div>
@@ -123,7 +125,7 @@
 
 		$(document).ready(function () {
 			var typeOfFilm = type;
-			var imbdID = id;
+			var imdbID = id;
 			var dupInDatabase = false;
 			var comparisonFilmObject;
 
