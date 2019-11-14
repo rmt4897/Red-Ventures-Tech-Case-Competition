@@ -1,5 +1,5 @@
 /*
-* heatmap.js Google Maps Overlay
+* Leaflet Heatmap Overlay
 *
 * Copyright (c) 2008-2016, Patrick Wied (https://www.patrick-wied.at)
 * Dual-licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -10,30 +10,218 @@
   if (typeof module !== "undefined" && module.exports) {
     module.exports = factory(
       require('heatmap.js'),
-      require('google-maps')
+      require('leaflet')
     );
   } else if (typeof define === "function" && define.amd) {
-    define(['heatmap.js', 'google-maps'], factory);
+    define(['heatmap.js', 'leaflet'], factory);
   } else {
     // browser globals
     if (typeof window.h337 === 'undefined') {
-      throw new Error('heatmap.js must be loaded before the gmaps heatmap plugin');
+      throw new Error('heatmap.js must be loaded before the leaflet heatmap plugin');
     }
-    if (typeof window.google === 'undefined') {
-      throw new Error('Google Maps must be loaded before the gmaps heatmap plugin');
+    if (typeof window.L === 'undefined') {
+      throw new Error('Leaflet must be loaded before the leaflet heatmap plugin');
     }
-    context[name] = factory(window.h337, window.google.maps);
+    context[name] = factory(window.h337, window.L);
   }
 
-})("HeatmapOverlay", this, function(h337, gmaps) {
+})("HeatmapOverlay", this, function (h337, L) {
   'use strict';
 
-  var HeatmapOverlay = function(map, cfg){
-    this.setMap(map);
-    this.initialize(cfg || {});
-  };
+  // Leaflet < 0.8 compatibility
+  if (typeof L.Layer === 'undefined') {
+    L.Layer = L.Class;
+  }
 
-  HeatmapOverlay.prototype = new gmaps.OverlayView();
+  var HeatmapOverlay = L.Layer.extend({
+
+    initialize: function (config) {
+      this.cfg = config;
+      this._el = L.DomUtil.create('div', 'leaflet-zoom-hide');
+      this._data = [];
+      this._max = 1;
+      this._min = 0;
+      this.cfg.container = this._el;
+    },
+
+    onAdd: function (map) {
+      var size = map.getSize();
+
+      this._map = map;
+
+      this._width = size.x;
+      this._height = size.y;
+
+      this._el.style.width = size.x + 'px';
+      this._el.style.height = size.y + 'px';
+      this._el.style.position = 'absolute';
+
+      this._origin = this._map.layerPointToLatLng(new L.Point(0, 0));
+
+      map.getPanes().overlayPane.appendChild(this._el);
+
+      if (!this._heatmap) {
+        this._heatmap = h337.create(this.cfg);
+      } 
+
+      // this resets the origin and redraws whenever
+      // the zoom changed or the map has been moved
+      map.on('moveend', this._reset, this);
+      this._draw();
+    },
+
+    addTo: function (map) {
+      map.addLayer(this);
+      return this;
+    },
+
+    onRemove: function (map) {
+      // remove layer's DOM elements and listeners
+      map.getPanes().overlayPane.removeChild(this._el);
+
+      map.off('moveend', this._reset, this);
+    },
+    _draw: function() {
+      if (!this._map) { return; }
+      
+      var mapPane = this._map.getPanes().mapPane;
+      var point = mapPane._leaflet_pos;      
+
+      // reposition the layer
+      this._el.style[HeatmapOverlay.CSS_TRANSFORM] = 'translate(' +
+        -Math.round(point.x) + 'px,' +
+        -Math.round(point.y) + 'px)';
+
+      this._update();
+    },
+    _update: function() {
+      var bounds, zoom, scale;
+      var generatedData = { max: this._max, min: this._min, data: [] };
+
+      bounds = this._map.getBounds();
+      zoom = this._map.getZoom();
+      scale = Math.pow(2, zoom);
+
+      if (this._data.length == 0) {
+        if (this._heatmap) {
+          this._heatmap.setData(generatedData);
+        }
+        return;
+      }
+
+
+      var latLngPoints = [];
+      var radiusMultiplier = this.cfg.scaleRadius ? scale : 1;
+      var localMax = 0;
+      var localMin = 0;
+      var valueField = this.cfg.valueField;
+      var len = this._data.length;
+    
+      while (len--) {
+        var entry = this._data[len];
+        var value = entry[valueField];
+        var latlng = entry.latlng;
+
+
+        // we don't wanna render points that are not even on the map ;-)
+        if (!bounds.contains(latlng)) {
+          continue;
+        }
+        // local max is the maximum within current bounds
+        localMax = Math.max(value, localMax);
+        localMin = Math.min(value, localMin);
+
+        var point = this._map.latLngToContainerPoint(latlng);
+        var latlngPoint = { x: Math.round(point.x), y: Math.round(point.y) };
+        latlngPoint[valueField] = value;
+
+        var radius;
+
+        if (entry.radius) {
+          radius = entry.radius * radiusMultiplier;
+        } else {
+          radius = (this.cfg.radius || 2) * radiusMultiplier;
+        }
+        latlngPoint.radius = radius;
+        latLngPoints.push(latlngPoint);
+      }
+      if (this.cfg.useLocalExtrema) {
+        generatedData.max = localMax;
+        generatedData.min = localMin;
+      }
+
+      generatedData.data = latLngPoints;
+
+      this._heatmap.setData(generatedData);
+    },
+    setData: function(data) {
+      this._max = data.max || this._max;
+      this._min = data.min || this._min;
+      var latField = this.cfg.latField || 'lat';
+      var lngField = this.cfg.lngField || 'lng';
+      var valueField = this.cfg.valueField || 'value';
+    
+      // transform data to latlngs
+      var data = data.data;
+      var len = data.length;
+      var d = [];
+    
+      while (len--) {
+        var entry = data[len];
+        var latlng = new L.LatLng(entry[latField], entry[lngField]);
+        var dataObj = { latlng: latlng };
+        dataObj[valueField] = entry[valueField];
+        if (entry.radius) {
+          dataObj.radius = entry.radius;
+        }
+        d.push(dataObj);
+      }
+      this._data = d;
+    
+      this._draw();
+    },
+    // experimential... not ready.
+    addData: function(pointOrArray) {
+      if (pointOrArray.length > 0) {
+        var len = pointOrArray.length;
+        while(len--) {
+          this.addData(pointOrArray[len]);
+        }
+      } else {
+        var latField = this.cfg.latField || 'lat';
+        var lngField = this.cfg.lngField || 'lng';
+        var valueField = this.cfg.valueField || 'value';
+        var entry = pointOrArray;
+        var latlng = new L.LatLng(entry[latField], entry[lngField]);
+        var dataObj = { latlng: latlng };
+        
+        dataObj[valueField] = entry[valueField];
+        this._max = Math.max(this._max, dataObj[valueField]);
+        this._min = Math.min(this._min, dataObj[valueField]);
+
+        if (entry.radius) {
+          dataObj.radius = entry.radius;
+        }
+        this._data.push(dataObj);
+        this._draw();
+      }
+    },
+    _reset: function () {
+      this._origin = this._map.layerPointToLatLng(new L.Point(0, 0));
+      
+      var size = this._map.getSize();
+      if (this._width !== size.x || this._height !== size.y) {
+        this._width  = size.x;
+        this._height = size.y;
+
+        this._el.style.width = this._width + 'px';
+        this._el.style.height = this._height + 'px';
+
+        this._heatmap._renderer.setDimensions(this._width, this._height);
+      }
+      this._draw();
+    } 
+  });
 
   HeatmapOverlay.CSS_TRANSFORM = (function() {
     var div = document.createElement('div');
@@ -51,228 +239,8 @@
         return prop;
       }
     }
-
     return props[0];
   })();
 
-  HeatmapOverlay.prototype.initialize = function(cfg) {
-    this.cfg = cfg;
-
-    var map = this.map = this.getMap();
-    var container = this.container = document.createElement('div');
-    var mapDiv = map.getDiv();
-    var width = this.width = mapDiv.clientWidth;
-    var height = this.height = mapDiv.clientHeight;
-
-    container.style.cssText = 'width:' + width +'px;height:' + height+'px;';
-
-    this.data = [];
-    this.max = 1;
-    this.min = 0;
-
-    cfg.container = container;
-  };
-
-  HeatmapOverlay.prototype.onAdd = function(){
-    var that = this;
-
-    this.getPanes().overlayLayer.appendChild(this.container);
-
-
-    this.changeHandler = gmaps.event.addListener(
-      this.map,
-      'bounds_changed',
-      function() { return that.draw(); }
-    );
-
-    if (!this.heatmap) {
-      this.heatmap = h337.create(this.cfg);
-    }
-    this.draw();
-  };
-
-  HeatmapOverlay.prototype.onRemove = function() {
-    if (!this.map) { return; }
-
-    this.map = null;
-
-    this.container.parentElement.removeChild(this.container);
-
-    if (this.changeHandler) {
-      gmaps.event.removeListener(this.changeHandler);
-      this.changeHandler = null;
-    }
-
-  };
-
-  HeatmapOverlay.prototype.draw = function() {
-    if (!this.map) { return; }
-
-    var bounds = this.map.getBounds();
-
-    var topLeft = new gmaps.LatLng(
-      bounds.getNorthEast().lat(),
-      bounds.getSouthWest().lng()
-    );
-
-    var projection = this.getProjection();
-    var point = projection.fromLatLngToDivPixel(topLeft);
-
-    this.container.style[HeatmapOverlay.CSS_TRANSFORM] = 'translate(' +
-        Math.round(point.x) + 'px,' +
-        Math.round(point.y) + 'px)';
-
-    this.update();
-  };
-
-  HeatmapOverlay.prototype.resize = function() {
-
-    if (!this.map){ return; }
-
-    var div = this.map.getDiv(),
-      width = div.clientWidth,
-      height = div.clientHeight;
-
-    if (width == this.width && height == this.height){ return; }
-
-    this.width = width;
-    this.height = height;
-
-    // update heatmap dimensions
-    this.heatmap._renderer.setDimensions(width, height);
-    // then redraw all datapoints with update
-    this.update();
-  };
-
-  HeatmapOverlay.prototype.update = function() {
-    var projection = this.getProjection(),
-      zoom, scale, bounds, topLeft;
-    var generatedData = { max: this.max, min: this.min, data: [] };
-
-    if (!projection){ return; }
-
-    bounds = this.map.getBounds();
-
-    topLeft = new gmaps.LatLng(
-      bounds.getNorthEast().lat(),
-      bounds.getSouthWest().lng()
-    );
-
-    zoom = this.map.getZoom();
-    scale = Math.pow(2, zoom);
-
-    this.resize();
-
-    if (this.data.length == 0) {
-      if (this.heatmap) {
-        this.heatmap.setData(generatedData);
-      }
-      return;
-    }
-
-
-    var latLngPoints = [];
-    // iterate through data
-    var len = this.data.length;
-    var layerProjection = this.getProjection();
-    var layerOffset = layerProjection.fromLatLngToDivPixel(topLeft);
-    var radiusMultiplier = this.cfg.scaleRadius ? scale : 1;
-    var localMax = 0;
-    var localMin = 0;
-    var valueField = this.cfg.valueField;
-
-
-    while (len--) {
-      var entry = this.data[len];
-      var value = entry[valueField];
-      var latlng = entry.latlng;
-
-
-      // we don't wanna render points that are not even on the map ;-)
-      if (!bounds.contains(latlng)) {
-        continue;
-      }
-      // local max is the maximum within current bounds
-      localMax = Math.max(value, localMax);
-      localMin = Math.min(value, localMin);
-
-      var point = layerProjection.fromLatLngToDivPixel(latlng);
-      var latlngPoint = { x: Math.round(point.x - layerOffset.x), y: Math.round(point.y - layerOffset.y) };
-      latlngPoint[valueField] = value;
-
-      var radius;
-
-      if (entry.radius) {
-        radius = entry.radius * radiusMultiplier;
-      } else {
-        radius = (this.cfg.radius || 2) * radiusMultiplier;
-      }
-      latlngPoint.radius = radius;
-      latLngPoints.push(latlngPoint);
-    }
-    if (this.cfg.useLocalExtrema) {
-      generatedData.max = localMax;
-      generatedData.min = localMin;
-    }
-
-    generatedData.data = latLngPoints;
-
-    this.heatmap.setData(generatedData);
-
-  };
-
-  HeatmapOverlay.prototype.setData = function(data) {
-    this.max = data.max;
-    this.min = data.min;
-
-    var latField = this.cfg.latField || 'lat';
-    var lngField = this.cfg.lngField || 'lng';
-    var valueField = this.cfg.valueField || 'value';
-
-    // transform data to latlngs
-    var data = data.data;
-    var len = data.length;
-    var d = [];
-
-    while (len--) {
-      var entry = data[len];
-      var latlng = new gmaps.LatLng(entry[latField], entry[lngField]);
-      var dataObj = { latlng: latlng };
-      dataObj[valueField] = entry[valueField];
-      if (entry.radius) {
-        dataObj.radius = entry.radius;
-      }
-      d.push(dataObj);
-    }
-    this.data = d;
-    this.update();
-  };
-  // experimential. not ready yet.
-  HeatmapOverlay.prototype.addData = function(pointOrArray) {
-    if (pointOrArray.length > 0) {
-        var len = pointOrArray.length;
-        while(len--) {
-          this.addData(pointOrArray[len]);
-        }
-      } else {
-        var latField = this.cfg.latField || 'lat';
-        var lngField = this.cfg.lngField || 'lng';
-        var valueField = this.cfg.valueField || 'value';
-        var entry = pointOrArray;
-        var latlng = new gmaps.LatLng(entry[latField], entry[lngField]);
-        var dataObj = { latlng: latlng };
-
-        dataObj[valueField] = entry[valueField];
-        if (entry.radius) {
-          dataObj.radius = entry.radius;
-        }
-        this.max = Math.max(this.max, dataObj[valueField]);
-        this.min = Math.min(this.min, dataObj[valueField]);
-        this.data.push(dataObj);
-        this.update();
-      }
-  };
-
   return HeatmapOverlay;
-
 });
