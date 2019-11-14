@@ -40,4 +40,4 @@ Our approach:
         • Beautifully designed headers, slideshows, animations, reviews, images, etc.
     
     Presentation: 
-        See you guys there! :D
+        See you all there! :D
