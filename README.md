@@ -1,6 +1,6 @@
 # Red-Ventures-Tech-Case-Competition
 ### By Abhay Zala, David Lu, & Michael Tyndall
-@davidlu51412 @aszala @rmt4897
+@
 
 So coding this was very tedious...
 We agreed to do a web app
