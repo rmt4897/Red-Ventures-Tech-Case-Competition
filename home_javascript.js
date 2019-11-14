@@ -34,6 +34,8 @@ function loadData() {
 		slideshowElements[i].children[1].children[3].innerHTML = object.rating;
 		slideshowElements[i].children[1].children[6].innerHTML = object.desc;
 
+		$(slideshowElements[i].children[1].children[0]).attr("href", "title/title.php?id=" + object.id + "&type=movie");
+
 		// Call imdb_crawler to pull poster images
 		applyImdbThumbnail(slideshowElements[i].children[0].children[1], true, object.id);
 	}
