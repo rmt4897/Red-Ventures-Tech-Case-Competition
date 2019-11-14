@@ -111,16 +111,16 @@
 		firebase.initializeApp(firebaseConfig);
 		const db = firebase.firestore();
 
-		navigator.geolocation.getCurrentPosition(function (position) {
-					console.log("hi	")
-					db.collection('VisitorLocation').add({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					})
-				});
-	
-
 		$(document).ready(function () {
+			navigator.geolocation.getCurrentPosition(function (position) {
+		
+				db.collection('VisitorLocation').add({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+				})
+			});
+
+
 			var typeOfFilm = type;
 			var imdbID = id;
 			var dupInDatabase = false;
