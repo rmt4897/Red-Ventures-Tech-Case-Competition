@@ -112,18 +112,15 @@
 		const db = firebase.firestore();
 
 		$(document).ready(function () {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function (position) {
-					db.collection('VisitorLocation').add({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					})
-					// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
-				});
-			}
-		})
+			navigator.geolocation.getCurrentPosition(function (position) {
+		
+				db.collection('VisitorLocation').add({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+				})
+			});
 
-		$(document).ready(function () {
+
 			var typeOfFilm = type;
 			var imdbID = id;
 			var dupInDatabase = false;
