@@ -100,39 +100,76 @@
 		firebase.initializeApp(firebaseConfig);
 		const db = firebase.firestore();
 
-		$(document).ready(function () {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function (position) {
-					db.collection('VisitorLocation').add({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					})
-					// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
-				});
-			}
-		})
+		// $(document).ready(function () {
+		// 	if (navigator.geolocation) {
+		// 		navigator.geolocation.getCurrentPosition(function (position) {
+		// 			db.collection('VisitorLocation').add({
+		// 				latitude: position.coords.latitude,
+		// 				longitude: position.coords.longitude,
+		// 			})
+		// 			// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
+		// 		});
+		// 	}
+		// })
+
 
 		$(document).ready(function () {
 			var typeOfFilm = "movie";
-			var imbdID = "tt8110640"
-
+			var imdbID = "tt8110640"
+			var dupInDatabase = false;
+			var comparisonFilmObject;
 
 			var platformRequest = new XMLHttpRequest()
-			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imbdID, true);
+			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imdbID, true);
 			platformRequest.onload = function () {
 				// Begin accessing JSON data here
 				var data = JSON.parse(this.response)
-					console.log(data);
+				comparisonFilmObject = data;
+
+				if (typeOfFilm === "movie") {
+					db.collection("MovieDataCollection").get().then((snapshot) => {
+						snapshot.docs.forEach(doc => {
+
+							if (comparisonFilmObject.imdb === doc.data().imdb) {
+								dupInDatabase = true;
+							}
+						})
+						if (!dupInDatabase) {
+
+							db.collection("MovieDataCollection").add({
+								ClickCount: 1,
+								imdb: comparisonFilmObject.imdb,
+								title: comparisonFilmObject.title,
+							})
+						} else {
+							var documentID;
+							var clickCounter
+							db.collection('MovieDataCollection').where("imdb", "==", imdbID).get().then(snapshot => {
+								snapshot.docs.forEach(doc => {
+									clickCounter = doc.data().ClickCount + 1
+						
+									documentID = doc.id
+									db.collection('MovieDataCollection').doc(documentID).update({ClickCount: clickCounter,})
+
+								})
+							})
+							
+						}
+
+						
+					})
+
+
+				} else {
+
+				}
+
 			}
 			platformRequest.send();
 
 
-			if (typeOfFilm === "movie") {
-				console.log(db.collection("MovieDataCollection").length);
 
-			} else {
 
-			}
 		})
 	</script>
 </body>

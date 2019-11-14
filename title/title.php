@@ -124,25 +124,44 @@
 		$(document).ready(function () {
 			var typeOfFilm = type;
 			var imbdID = id;
+			var dupInDatabase = false;
+			var comparisonFilmObject;
 
-
-			var platformRequest = new XMLHttpRequest();
-			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imbdID, true);
+			var platformRequest = new XMLHttpRequest()
+			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imdbID, true);
 			platformRequest.onload = function () {
 				// Begin accessing JSON data here
 				var data = JSON.parse(this.response)
-					console.log(data);
+				comparisonFilmObject = data;
+				if (typeOfFilm === "movie") {
+					db.collection("MovieDataCollection").get().then((snapshot) => {
+						snapshot.docs.forEach(doc => {
+							if (comparisonFilmObject.imdb === doc.data().imdb) {
+								dupInDatabase = true;
+							}
+						})
+						if (!dupInDatabase) {
+							db.collection("MovieDataCollection").add({
+								ClickCount: 1,
+								imdb: comparisonFilmObject.imdb,
+								title: comparisonFilmObject.title,
+							})
+						} else {
+							console.log(db.collection("MovieDataCollection").where("imdb", "==", comparisonFilmObject.imdb).data().ClickCount)
+							// db.collection("MovieDataCollection").where("imdb", "==", comparisonFilmObject.imdb).update({
+							
+							// })
+						}
+					})
+
+
+				} else {
+
+				}
+
 			}
 			platformRequest.send();
 
-
-			if (typeOfFilm === "movie") {
-				console.log(db.collection("MovieDataCollection").length);
-
-			} else {
-
-			}
-		})
 	</script>
 </body>
 
