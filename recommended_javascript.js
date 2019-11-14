@@ -27,7 +27,7 @@ function loadShows() {
 
 		items[i+items.length/2].children[0].children[1].children[0].innerHTML = object.name;
 
-		$(items[i]).attr("href", "title/title.php?id=" + object.id + "&type=show");
+		$(items[i+items.length/2]).attr("href", "title/title.php?id=" + object.id + "&type=show");
 
 		applyImdbThumbnail(items[i+items.length/2].children[0].children[0].children[0], false, object.id);
 	}
