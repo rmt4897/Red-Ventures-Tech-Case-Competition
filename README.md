@@ -1,8 +1,7 @@
 # Red-Ventures-Tech-Case-Competition
 ### By Abhay Zala, David Lu, & Michael Tyndall
 
-So coding this was very tedious...
-We agreed to do a web app
+We built a web app
 
 ## Our approach:
     * Tasks were divided among the 3 of us. We would realtively split the tasks of retreival and integration of data, css/html design, and other aspects of our project amongst ourselves.
