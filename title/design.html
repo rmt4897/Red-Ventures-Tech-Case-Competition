@@ -102,6 +102,7 @@
 
 
 		$(document).ready(function () {
+		
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				db.collection('VisitorLocation').add({
@@ -109,7 +110,8 @@
 					longitude: position.coords.longitude,
 				})
 			});
-		}	
+		}
+			
 
 
 			var typeOfFilm = "show";
