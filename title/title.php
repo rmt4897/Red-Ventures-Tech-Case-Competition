@@ -19,7 +19,7 @@
 	<div class="nav-bar">
 		<div class="nav-container">
 			<div class="logo-container">
-				<a href="http://redventures.purple-techs.com"><img class="logo" src="imgs/logo.png"></a>
+				<a href="http://redventures.purple-techs.com"><img class="logo" src="../imgs/logo.png"></a>
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
