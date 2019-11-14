@@ -19,13 +19,14 @@
 	height: 50%;
 	position: relative;
 	top: 25%;
-	width: 20%;
+	width: 30%;
 }
 
 .extra-information {
 	top: 28.65%;
 	text-align: right;
 	font-size: 18px;
+	width: 20%;
 }
 
 .extra-information>a {

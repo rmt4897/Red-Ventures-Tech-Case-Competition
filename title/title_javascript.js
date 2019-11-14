@@ -31,6 +31,9 @@ function loadData(object) {
 	if (type == "movie") {
 		document.getElementById("extra-information").children[6].children[0].innerHTML = object.date;
 		document.getElementById("information").children[4].innerHTML = object.rating;
+	} else {
+		document.getElementById("extra-information").children[6].children[0].style.visibility = "hidden";
+		document.getElementById("information").children[4].style.visibility = "hidden";
 	}
 
 	applyImdbThumbnail(document.getElementById("poster-image"), true, object.id);
