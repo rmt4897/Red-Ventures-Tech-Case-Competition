@@ -1,88 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Leaflet Heatmap Layer Plugin</title>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<link rel="stylesheet" href="../css.css">
+		<link rel="stylesheet" href="analytics.css">
+		<script src="heatmap.js"></script>
+		<script src="gmap-heatmap.js"></script>
+	</head>
 
-<head>
-	<meta charset="utf-8">
-	<title>Leaflet Heatmap Layer Plugin</title>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-	<link rel="stylesheet" href="../css.css">
-	<link rel="stylesheet" href="analytics.css">
-	<script src="heatmap.js"></script>
-	<script src="gmap-heatmap.js"></script>
-</head>
+	<body>
+		<div id="map"></div>
 
-<body>
-	<div id="map"></div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+		<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
 
-	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
 
-	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
-
-	<script type="text/javascript" src="../helper_scripts/click_count_sorter.js"></script>
-	<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
+		<script type="text/javascript" src="../helper_scripts/click_count_sorter.js"></script>
+		<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
 
 
-	<script>
-		function loadData(array) {
-			var testData = array;
-			var baseLayer = L.tileLayer(
-				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-					maxZoom: 18
-				}
-			);
-			var cfg = {
-				// radius should be small ONLY if scaleRadius is true (or small radius is intended)
-				"radius": 2,
-				"maxOpacity": .8,
-				// scales the radius based on map zoom
-				"scaleRadius": true,
-				// if set to false the heatmap uses the global maximum for colorization
-				// if activated: uses the data maximum within the current map boundaries
-				//   (there will always be a red spot with useLocalExtremas true)
-				"useLocalExtrema": true,
-				// which field name in your data represents the latitude - default "lat"
-				latField: 'lat',
-				// which field name in your data represents the longitude - default "lng"
-				lngField: 'lng',
-				// which field name in your data represents the data value - default "value"
-				valueField: 'count'
-			};
-			var heatmapLayer = new HeatmapOverlay(cfg);
-			var map = new L.Map('map', {
-				center: new L.LatLng(25.6586, -80.3568),
-				zoom: 4,
-				layers: [baseLayer, heatmapLayer]
-			});
-			// make accessible for debugging
-			layer = heatmapLayer;
-
-			console.log(location_data(testData));
-			layer.setData(location_data(testData));
-		};
-
-		function location_data(our_data) {
-			var api_array = [];
-
-			for (i = 0; i < our_data.length; i++) {
-				var newData = {
-					lat: our_data[i].latitude,
-					lng: our_data[i].longitude,
-					count: 1
+		<script>
+			function loadData(array) {
+				var testData = array;
+				var baseLayer = L.tileLayer(
+					'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+						maxZoom: 18
+					}
+				);
+				var cfg = {
+					// radius should be small ONLY if scaleRadius is true (or small radius is intended)
+					"radius": 2,
+					"maxOpacity": .8,
+					// scales the radius based on map zoom
+					"scaleRadius": true,
+					// if set to false the heatmap uses the global maximum for colorization
+					// if activated: uses the data maximum within the current map boundaries
+					//   (there will always be a red spot with useLocalExtremas true)
+					"useLocalExtrema": true,
+					// which field name in your data represents the latitude - default "lat"
+					latField: 'lat',
+					// which field name in your data represents the longitude - default "lng"
+					lngField: 'lng',
+					// which field name in your data represents the data value - default "value"
+					valueField: 'count'
 				};
-				api_array.push(newData);
-			}
-			return { max: 10000, data: api_array };
-		}
-	</script>
-</body>
+				var heatmapLayer = new HeatmapOverlay(cfg);
+				var map = new L.Map('map', {
+					center: new L.LatLng(25.6586, -80.3568),
+					zoom: 4,
+					layers: [baseLayer, heatmapLayer]
+				});
+				// make accessible for debugging
+				layer = heatmapLayer;
 
+				console.log(location_data(testData));
+				layer.setData(location_data(testData));
+			};
+
+			function location_data(our_data) {
+				var api_array = [];
+
+				for (i = 0; i < our_data.length; i++) {
+					var newData = {
+						lat: our_data[i].latitude,
+						lng: our_data[i].longitude,
+						count: 1
+					};
+					api_array.push(newData);
+				}
+				return { max: 10000, data: api_array };
+			}
+		</script>
+	</body>
 </html>
