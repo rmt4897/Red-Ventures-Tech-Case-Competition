@@ -13,8 +13,11 @@ var firebaseConfig = {
 
 var arrayofShowData = [];
 var sortedShows = [];
+
 var arrayofMovieData = [];
 var sortedMovies = [];
+
+var arrayofGeolocation = []
 
 
 
@@ -30,24 +33,27 @@ $(function () {
         snapshot.docs.forEach(doc => {
             arrayofShowData[arrayofShowData.length] = doc.data();
         })
-        for (let i = 0; i < arrayofShowData.length; i++) {
-        }
+      
 
         sortedShows= sort_by_click_count(arrayofShowData);
-        console.log(sortedShows)
-
+   
     })
 
     db.collection("MovieDataCollection").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             arrayofMovieData[arrayofMovieData.length] = doc.data();
         })
-        for (let i = 0; i < arrayofShowData.length; i++) {
-         
-        }
+        
 
         sortedMovies = sort_by_click_count(arrayofMovieData);
-        console.log(sortedMovies)
+
+    })
+
+    db.collection("VisitorLocation").get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            arrayofGeolocation[arrayofGeolocation.length] = doc.data();
+        })
+
 
     })
 
