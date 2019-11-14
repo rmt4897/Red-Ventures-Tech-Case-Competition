@@ -133,6 +133,7 @@
 				// Begin accessing JSON data here
 				var data = JSON.parse(this.response)
 				comparisonFilmObject = data;
+
 				if (typeOfFilm === "movie") {
 					db.collection("MovieDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
@@ -147,21 +148,24 @@
 								title: comparisonFilmObject.title,
 							})
 						} else {
-							console.log(db.collection("MovieDataCollection").where("imdb", "==", comparisonFilmObject.imdb).data().ClickCount)
-							// db.collection("MovieDataCollection").where("imdb", "==", comparisonFilmObject.imdb).update({
-							
-							// })
+							var documentID;
+							var clickCounter
+							db.collection('MovieDataCollection').where("imdb", "==", imdbID).get().then(snapshot => {
+								snapshot.docs.forEach(doc => {
+									clickCounter = doc.data().ClickCount + 1
+									documentID = doc.id
+									db.collection('MovieDataCollection').doc(documentID).update({ClickCount: clickCounter,})
+								})
+							})
 						}
 					})
-
-
 				} else {
 
-				}
 
+				}
 			}
 			platformRequest.send();
-
+		})
 	</script>
 </body>
 

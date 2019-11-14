@@ -129,13 +129,11 @@
 				if (typeOfFilm === "movie") {
 					db.collection("MovieDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
-
 							if (comparisonFilmObject.imdb === doc.data().imdb) {
 								dupInDatabase = true;
 							}
 						})
 						if (!dupInDatabase) {
-
 							db.collection("MovieDataCollection").add({
 								ClickCount: 1,
 								imdb: comparisonFilmObject.imdb,
@@ -147,29 +145,18 @@
 							db.collection('MovieDataCollection').where("imdb", "==", imdbID).get().then(snapshot => {
 								snapshot.docs.forEach(doc => {
 									clickCounter = doc.data().ClickCount + 1
-						
 									documentID = doc.id
 									db.collection('MovieDataCollection').doc(documentID).update({ClickCount: clickCounter,})
-
 								})
 							})
-							
 						}
-
-						
 					})
-
-
 				} else {
 
-				}
 
+				}
 			}
 			platformRequest.send();
-
-
-
-
 		})
 	</script>
 </body>
