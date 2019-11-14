@@ -11,29 +11,23 @@
 			padding: 0;
 			height: 100%;
 		}
-
 		body {
 			font-family: sans-serif;
 		}
-
 		body * {
 			font-weight: 200;
 		}
-
 		h1 {
 			position: absolute;
 			background: white;
 			padding: 10px;
 		}
-
 		#map {
 			height: 100%;
 		}
-
 		.leaflet-container {
 			background: rgba(0, 0, 0, .8) !important;
 		}
-
 		h1 {
 			position: absolute;
 			background: black;
@@ -42,7 +36,6 @@
 			font-weight: 200;
 			z-index: 10000;
 		}
-
 		#all-examples-info {
 			position: absolute;
 			background: white;
@@ -70,14 +63,29 @@
 		<br />Check out the full <a href="http://www.patrick-wied.at/static/heatmapjs/examples.html?utm_source=gh_local"
 			target="_blank">list of all heatmap.js examples</a> with more pointers &amp; inline documentation.
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+
+	<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
+
+
+	<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
+
+
 	<script>
 		function loadData(array) {
 			var testData = array;
 			var baseLayer = L.tileLayer(
 				'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-				maxZoom: 18
-			}
+					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+					maxZoom: 18
+				}
 			);
 			var cfg = {
 				// radius should be small ONLY if scaleRadius is true (or small radius is intended)
@@ -86,7 +94,7 @@
 				// scales the radius based on map zoom
 				"scaleRadius": true,
 				// if set to false the heatmap uses the global maximum for colorization
-				// if activated: uses the data maximum within the current map boundaries 
+				// if activated: uses the data maximum within the current map boundaries
 				//   (there will always be a red spot with useLocalExtremas true)
 				"useLocalExtrema": true,
 				// which field name in your data represents the latitude - default "lat"
@@ -102,15 +110,11 @@
 				zoom: 4,
 				layers: [baseLayer, heatmapLayer]
 			});
-
 			// make accessible for debugging
 			layer = heatmapLayer;
-
 			location_data(testData);
-
 			layer.setData(masfy_api_data);
 		};
-
 		var masfy_api_data;
 		function location_data(our_data) {
 			masfy_api_data = {
@@ -126,18 +130,18 @@
 				};
 				api_array.push(newData);
 			}
-
 			masfy_api_data.data = api_array;
-
 		}
-		var test = {
-			
-		};
-
+		var test = {}
 		loadData(test);
-
 		console.log(masfy_api_data);
+		
 	</script>
+
+	<script type="text/javascript" src="../helper_scripts/click_count_sorter.js"></script>
+
+
+
 </body>
 
 </html>

@@ -1,5 +1,4 @@
 
-
 var firebaseConfig = {
     apiKey: "redventure-case-comp",
     authDomain: "redventure-case-comp.firebaseapp.com",
@@ -17,7 +16,7 @@ var sortedShows = [];
 var arrayofMovieData = [];
 var sortedMovies = [];
 
-var arrayofGeolocation = []
+var arrayofGeolocation = [];
 
 
 
@@ -27,8 +26,8 @@ const db = firebase.firestore();
 
 
 
+$(document).ready(function() {
 
-$(function () {
     db.collection("ShowDataCollection").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             arrayofShowData[arrayofShowData.length] = doc.data();
