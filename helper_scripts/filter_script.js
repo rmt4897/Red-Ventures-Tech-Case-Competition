@@ -135,8 +135,8 @@ function movieDisplay() {
 
   // This will add the elements into the HTML
   for (let i = 0; i < list.length; i++) {
-	  console.log(finalMovieArray[i].imdb);
-    $(".display-container").append("<a href='title/title.php?id=" + finalMovieArray[i].imdb + "&type=" + dataToFetch + "' class='item'> <div class='item-image-container'> <div class='item-image-container'> <div class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + finalMovieArray[i].title + " </div> </div> </div></a><br><br>");
+	$(".display-container").append("<a href='title/title.php?id=" + finalMovieArray[i].imdb + "&type=" + dataToFetch + "' class='item'> <div class='item-image-container'> <div class='item-image-container'> <div id=" + finalMovieArray[i].imdb + " class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + finalMovieArray[i].title + " </div> </div> </div></a><br><br>");
+	applyImdbThumbnail(document.getElementById(finalMovieArray[i].imdb), false, finalMovieArray[i].imdb);
   }
 
 

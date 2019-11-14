@@ -29,7 +29,7 @@ function loadData(object) {
 	document.getElementById("extra-information").children[4].children[2].innerHTML = object.vote_count;
 
 	if (type == "movie") {
-		document.getElementById("extra-information").children[6].children[0].innerHTML = object.release_date;
+		document.getElementById("extra-information").children[6].children[0].innerHTML = object.date;
 		document.getElementById("information").children[4].innerHTML = object.rating;
 	}
 
