@@ -31,6 +31,9 @@ $(function () {
            console.log(arrayofShowData[i])
         }
 
+        var sorted = sort_by_click_Count(arrayofShowData);
+        console.log(sorted)
+
     })
 })
 
