@@ -53,14 +53,14 @@ $(document).ready(function() {
 function loadMovies(movies) {
 	for (var i=0;i<movies.length;i++) {
 		$("#movies").append("<a href='../title/title.php?id=" + movies[i].imdb + "&type=movie' class='item'> <div class='item-image-container'> <div class='item-image-container'> <div id=" + movies[i].imdb + " class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + movies[i].title + " </div> </div> </div></a><br><br>");
+
+		applyImdbThumbnail(document.getElementById(movies[i].imdb), false, movies[i].imdb);
 	}
-	applyImdbThumbnail(document.getElementById(movies[i].imdb), false, movies[i].imdb);
 }
 
 function loadShows(shows) {
 	for (var i=0;i<shows.length;i++) {
 		$("#shows").append("<a href='../title/title.php?id=" + shows[i].imdb + "&type=show' class='item'> <div class='item-image-container'> <div class='item-image-container'> <div id=" + shows[i].imdb + " class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + shows[i].title + " </div> </div> </div></a><br><br>");
+		applyImdbThumbnail(document.getElementById(shows[i].imdb), false, shows[i].imdb);
 	}
-
-	applyImdbThumbnail(document.getElementById(shows[i].imdb), false, shows[i].imdb);
 }
