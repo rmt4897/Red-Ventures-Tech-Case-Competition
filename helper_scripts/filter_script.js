@@ -23,7 +23,6 @@ var uniqueArray = [];
 var dataToFetch = "movie";
 
 // loads the checkboxes at the beginning
-
 request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
 request.onload = function () {
   // Begin accessing JSON data here
@@ -205,8 +204,9 @@ function updateMoviePlatformFilters() {
 }
 
 
-// toggles between shows and movies and updates the checkboxes
+// toggles between shows and movies and updates the checkboxes - updates if it is a movie or show in firebase
 $(".collection-filter-type").click(function () {
+
 
   $(".production-companies").empty();
   $(".streaming-platform").empty();
@@ -216,10 +216,17 @@ $(".collection-filter-type").click(function () {
   if (ifMovieActive === "collection-filter active") {
     dataToFetch = "movie"
     $(".display-container").empty();
+    db.collection("isThisMovieOrShow").doc("FilmType").update({
+      Type: "movie"
+    })
+
   } else if (ifShowActive === "collection-filter active") {
     dataToFetch = "show"
     $(".display-container").empty();
 
+    db.collection("isThisMovieOrShow").doc("FilmType").update({
+      Type: "show"
+    })
   }
 
   // gets the data to dynamically create production company checkboxes
@@ -318,3 +325,22 @@ function fetchAll() {
 $(function () {
   fetchAll();
 });
+
+// this will update the firebase'
+$('.item').click(function () {
+  console.log("hi")
+});
+
+// firebase config
+var firebaseConfig = {
+  apiKey: "redventure-case-comp",
+  authDomain: "redventure-case-comp.firebaseapp.com",
+  databaseURL: "https://redventure-case-comp.firebaseio.com",
+  projectId: "redventure-case-comp",
+  storageBucket: "redventure-case-comp.appspot.com",
+  messagingSenderId: "sender-id",
+  appId: "app-id",
+  measurementId: "G-measurement-id",
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();

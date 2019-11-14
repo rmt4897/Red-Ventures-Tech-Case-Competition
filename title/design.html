@@ -84,6 +84,7 @@
 	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
 
 	<script>
+		
 		var firebaseConfig = {
 			apiKey: "redventure-case-comp",
 			authDomain: "redventure-case-comp.firebaseapp.com",
@@ -109,7 +110,29 @@
 					// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
 				});
 			}
-			
+		})
+
+		$(document).ready(function () {
+			var typeOfFilm = "movie";
+			var imbdID = "tt8110640"
+
+
+			var platformRequest = new XMLHttpRequest()
+			platformRequest.open('GET', 'https://casecomp.konnectrv.io/' + typeOfFilm + '/' + imbdID, true);
+			platformRequest.onload = function () {
+				// Begin accessing JSON data here
+				var data = JSON.parse(this.response)
+					console.log(data);
+			}
+			platformRequest.send();
+
+
+			if (typeOfFilm === "movie") {
+				console.log(db.collection("MovieDataCollection").length);
+
+			} else {
+
+			}
 		})
 	</script>
 </body>
