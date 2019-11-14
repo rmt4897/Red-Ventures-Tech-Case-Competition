@@ -1,7 +1,7 @@
 <?php
 	$type = $_GET['type'];
 
-	if (strcmp($type, "movies") == 0) {
+	if (strcmp($type, "movie") == 0) {
 		$movies = "active";
 		$shows = "";
 	} else {
@@ -30,8 +30,8 @@
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
-				<a href="show.php?type=movies" class="nav-link">All Movies</a>
-				<a href="show.php?type=shows" class="nav-link">All Shows</a>
+				<a href="show.php?type=movie" class="nav-link">All Movies</a>
+				<a href="show.php?type=show" class="nav-link">All Shows</a>
 				<a href="recommended.html" class="nav-link">Recommended</a>
 			</div>
 		</div>
