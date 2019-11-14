@@ -20,39 +20,43 @@ var uniqueArray = [];
 
 
 //This variables changes when the movies or shows tab is clicked - it will load different things depending on what tab is clicked
-var dataToFetch = "movie";
+var dataToFetch;
 
-// loads the checkboxes at the beginning
-request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
-request.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
+$(function() {
+	dataToFetch = $("#initial-type").attr("data");
 
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      allMovieProductions = data;
-    })
-    productionMovieCheckboxes();
-  } else {
-    console.log('error')
-  }
-}
-request.send();
+	// loads the checkboxes at the beginning
+	request.open('GET', 'https://casecomp.konnectrv.io/production/' + dataToFetch, true)
+	request.onload = function () {
+	  // Begin accessing JSON data here
+	  var data = JSON.parse(this.response)
 
-request2.open('GET', 'https://casecomp.konnectrv.io/platform/' + dataToFetch, true)
-request2.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
-  if (request2.status >= 200 && request2.status < 400) {
-    data.forEach(movie => {
-      allMoviePlatforms = data;
-    })
-    platformMovieCheckboxes();
-  } else {
-    console.log('error')
-  }
-}
-request2.send();
+	  if (request.status >= 200 && request.status < 400) {
+	    data.forEach(movie => {
+	      allMovieProductions = data;
+	    })
+	    productionMovieCheckboxes();
+	  } else {
+	    console.log('error')
+	  }
+	}
+	request.send();
+
+	request2.open('GET', 'https://casecomp.konnectrv.io/platform/' + dataToFetch, true)
+	request2.onload = function () {
+	  // Begin accessing JSON data here
+	  var data = JSON.parse(this.response)
+	  if (request2.status >= 200 && request2.status < 400) {
+	    data.forEach(movie => {
+	      allMoviePlatforms = data;
+	    })
+	    platformMovieCheckboxes();
+	  } else {
+	    console.log('error')
+	  }
+	}
+	request2.send();
+});
 
 
 

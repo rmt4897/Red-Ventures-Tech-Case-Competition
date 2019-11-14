@@ -1,8 +1,21 @@
+<?php
+	$type = $_GET['type'];
+
+	if (strcmp($type, "movies") == 0) {
+		$movies = "active";
+		$shows = "";
+	} else {
+		$movies = "";
+		$shows = "active";
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
 	<meta charset="utf-8">
+	<meta id="initial-type" data="<?php echo $type; ?>">
 	<title>Name of Apps</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<link rel="stylesheet" href="css.css">
@@ -47,11 +60,11 @@
 		<div class="display-panel">
 			<div class="collection-type-container">
 				<div class="collection-filter-type">
-					<div class="collection-filter active" onclick="javascript:swapActiveLargeFilter(0);">
+					<div class="collection-filter <?php echo $movies; ?>" onclick="javascript:swapActiveLargeFilter(0);">
 						Movies
 					</div>
 				</div>
-				<div class="collection-filter-type" onclick="javascript:swapActiveLargeFilter(1);">
+				<div class="collection-filter-type  <?php echo $shows; ?>" onclick="javascript:swapActiveLargeFilter(1);">
 					<div class="collection-filter">
 						Shows
 					</div>
