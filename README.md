@@ -8,10 +8,11 @@ So coding this was very tedious...
 - We agreed to do a web app
 
 Our approach:
-    Tasks were divided among the 3 of us. We would realtively split the tasks of retreival and integration of data, css/html design, and other aspects of our project amongst ourselves.
-    At first, we utilized white boards to brainstorm the design of our website. After that, we focused on the API, learning, pulling, and manipulating it so that it would be optimal for performance and user experience. 
-    We then created a back-end database that would store data collected from users of the website and created a business analytics page for solely businesses to help them understand where their customers are and "what they like."
-    Many of us worked on one individual function of the programs we wrote, and then combined all 3 to form a "mega-function
+    • Tasks were divided among the 3 of us. We would realtively split the tasks of retreival and integration of data, css/html design, and other aspects of our project amongst ourselves.
+    • At first, we utilized white boards to brainstorm the design of our website. After that, we focused on the API, learning, pulling, and manipulating it so that it would be optimal for performance and user experience. 
+    • We put an emphasis "taking what works and making it better." With that said, we took inspiration of the layout of netflix and imdb, enabling customers to feel more relaxed with our website, since many people who use tv/movie websites are used to the layout of these two popular companies
+    • We then created a back-end database that would store data collected from users of the website and created a business analytics page for solely businesses to help them understand where their customers are and "what they like."
+    • Many of us worked on one individual function of the programs we wrote, and then combined all 3 to form a "mega-function
 
 
     UI/UX Features: 
@@ -35,7 +36,7 @@ Our approach:
         • The database is able to store many users (the more data, the better; therefore, the more users, the more accurate data we retrieve, enabling the company to be more informed on their customer/audience)
     
     Architecture: 
-        • Beautifully designed headers, slideshows, animations, images, etc.
+        • Beautifully designed headers, slideshows, animations, reviews, images, etc.
     
     Presentation: 
         See you guys there! :D
