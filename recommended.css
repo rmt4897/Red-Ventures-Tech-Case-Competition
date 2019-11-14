@@ -6,6 +6,7 @@
 	width: 80%;
 	height: 100%;
 	margin: auto;
+	overflow: auto;
 }
 
 .main-container::-webkit-scrollbar { width: 0 !important }
