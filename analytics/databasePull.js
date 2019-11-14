@@ -1,4 +1,5 @@
 
+
 var firebaseConfig = {
     apiKey: "redventure-case-comp",
     authDomain: "redventure-case-comp.firebaseapp.com",
@@ -13,17 +14,23 @@ var firebaseConfig = {
 var arrayofShowData = [];
 
 
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 
 
+
 $(function () {
     db.collection("ShowDataCollection").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
-            arrayofShowData[arrayofShowData.length] = doc;
+            arrayofShowData[arrayofShowData.length] = doc.data();
         })
+        for (let i = 0; i < arrayofShowData.length; i++) {
+           console.log(arrayofShowData[i])
+        }
+
     })
 })
 
