@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<link rel="stylesheet" href="css.css">
 	<link rel="stylesheet" href="show.css">
+	<link rel="shortcut icon" type="image/x-icon" href="imgs/favicon.ico">
 </head>
 
 <body>
