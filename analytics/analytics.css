@@ -1,21 +1,63 @@
 body {
 	background: white;
+	color: black;
+	overflow-y: auto;
+	height: 200%;
 }
 
-.heading {
+.heading, .map-title {
 	width: 100%;
 	height: 80px;
 	background: deepskyblue;
 	text-align: center;
 }
 
-.heading-text {
+.heading-text, .map-title-text {
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
 	font-size: 40px;
+	color: white;
 }
 
 #map {
 	height: 100%;
+	width: 100%;
+}
+
+.most-clicked {
+	width: 100%;
+}
+
+.most-clicked-media {
+	width: 100%;
+}
+
+.most-clicked-title {
+	width: 100%;
+	margin: auto;
+	font-size: 30px;
+	padding-left: 50px;
+}
+
+.most-clicked-container {
+	width: 100%;
+}
+
+.most-clicked-items {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+}
+
+.item-title-container {
+	color: black !important;
+}
+
+.map-container {
+	width: 50%;
+	height: 25%;
+	margin: auto;
+	position: relative;
+	top: 200px;
 }

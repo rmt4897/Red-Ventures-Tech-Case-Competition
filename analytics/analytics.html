@@ -2,13 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Leaflet Heatmap Layer Plugin</title>
+		<title>MASFY - Analytics</title>
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<link rel="stylesheet" href="../css.css">
 		<link rel="stylesheet" href="analytics.css">
 		<script src="heatmap.js"></script>
 		<script src="gmap-heatmap.js"></script>
+		<link rel="shortcut icon" type="image/x-icon" href="../imgs/favicon.ico">
 	</head>
 
 	<body>
@@ -17,21 +18,26 @@
 				MASFY - Analytics
 			</div>
 		</div>
+		<br><br>
 		<div class="most-clicked">
-			<div class="most-clicked-movies">
+			<div class="most-clicked-media">
 				<div class="most-clicked-title">
-
+					Most Clicked Movies:
 				</div>
+				<br><br>
 				<div class="most-clicked-container">
 					<div id="movies" class="most-clicked-items">
 
 					</div>
 				</div>
 			</div>
-			<div class="most-clicked-shows">
+			<br><br><br>
+			<br><br><br>
+			<div class="most-clicked-media">
 				<div class="most-clicked-title">
-
+					Most Clicked Shows:
 				</div>
+				<br><br>
 				<div class="most-clicked-container">
 					<div id="shows" class="most-clicked-items">
 
@@ -39,9 +45,17 @@
 				</div>
 			</div>
 		</div>
-		<div id="map"></div>
+		<br><br><br>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<div class="map-container">
+			<div class="map-title">
+				<div class="map-title-text">
+					Vistor Location Heatmap:
+				</div>
+			</div>
+			<div id="map"></div>
+		</div>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
@@ -52,6 +66,7 @@
 		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
 
+		<script type="text/javascript" charset="utf-8" src="helper_scripts/imdb_crawler.js"></script>
 		<script type="text/javascript" src="../helper_scripts/click_count_sorter.js"></script>
 		<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
 
