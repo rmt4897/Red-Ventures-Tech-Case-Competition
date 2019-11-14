@@ -85,7 +85,6 @@
 	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
 
 	<script>
-
 		var firebaseConfig = {
 			apiKey: "redventure-case-comp",
 			authDomain: "redventure-case-comp.firebaseapp.com",
@@ -96,25 +95,24 @@
 			appId: "app-id",
 			measurementId: "G-measurement-id",
 		};
-
 		// Initialize Firebase
 		firebase.initializeApp(firebaseConfig);
 		const db = firebase.firestore();
 
-		// $(document).ready(function () {
-		// 	if (navigator.geolocation) {
-		// 		navigator.geolocation.getCurrentPosition(function (position) {
-		// 			db.collection('VisitorLocation').add({
-		// 				latitude: position.coords.latitude,
-		// 				longitude: position.coords.longitude,
-		// 			})
-		// 			// console.log("Found your location \nLat : " + position.coords.latitude + " \nLang :" + position.coords.longitude);
-		// 		});
-		// 	}
-		// })
+
 
 
 		$(document).ready(function () {
+		
+				navigator.geolocation.getCurrentPosition(function (position) {
+					console.log("hi	")
+					db.collection('VisitorLocation').add({
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+					})
+				});
+	
+
 			var typeOfFilm = "show";
 			var imdbID = "tt1844624"
 			var dupInDatabase = false;
@@ -151,7 +149,7 @@
 							})
 						}
 					})
-				} 
+				}
 				else if (typeOfFilm === "show") {
 					db.collection("ShowDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
@@ -172,7 +170,7 @@
 								snapshot.docs.forEach(doc => {
 									clickCounter = doc.data().ClickCount + 1
 									documentID = doc.id
-									db.collection('ShowDataCollection').doc(documentID).update({ClickCount: clickCounter,})
+									db.collection('ShowDataCollection').doc(documentID).update({ ClickCount: clickCounter, })
 								})
 							})
 						}
