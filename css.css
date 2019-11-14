@@ -55,10 +55,10 @@ body {
 }
 
 .shine {
-	background: #f6f7f8 !important;
-	background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%) !important;
+	background: rgb(50, 50, 50) !important;
+	background-image: linear-gradient(135deg, rgb(50, 50, 50) 0%, rgb(60, 60, 60) 20%, rgb(70, 70, 70) 40%, rgb(50, 50, 50) 100%) !important;
 	background-repeat: no-repeat !important;
-	background-size: 800px 100% !important;
+	background-size: 300% 300% !important;
 	display: inline-block;
 	position: relative;
 
@@ -77,11 +77,11 @@ body {
 
  @-webkit-keyframes placeholderShimmer {
 	0% {
-		background-position: -468px 0;
+		background-position: 300% 300%;
 	}
 
 	100% {
-		background-position: 468px 0;
+		background-position: -100% -100%;
 	}
 }
 
