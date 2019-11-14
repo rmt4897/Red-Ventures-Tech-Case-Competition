@@ -1,3 +1,4 @@
+
 var firebaseConfig = {
     apiKey: "redventure-case-comp",
     authDomain: "redventure-case-comp.firebaseapp.com",
@@ -9,13 +10,24 @@ var firebaseConfig = {
     measurementId: "G-measurement-id",
 };
 
+var arrayofShowData = [];
+
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-db.collection("ShowDataCollection").get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-        if (comparisonFilmObject.imdb === doc.data().imdb) {
-            dupInDatabase = true;
-        }
+
+
+
+$(function () {
+    db.collection("ShowDataCollection").get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            arrayofShowData[arrayofShowData.length] = doc;
+        })
     })
 })
+
+
+
+
+
