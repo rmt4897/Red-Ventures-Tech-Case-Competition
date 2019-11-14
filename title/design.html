@@ -125,7 +125,6 @@
 				// Begin accessing JSON data here
 				var data = JSON.parse(this.response)
 				comparisonFilmObject = data;
-
 				if (typeOfFilm === "movie") {
 					db.collection("MovieDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
