@@ -61,6 +61,26 @@
 	height: 100%;
 }
 
+.display-container {
+	flex-wrap: wrap;
+	padding-top: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+	overflow: auto;
+	height: 725px;
+	justify-content: flex-start;
+}
+
+.item {
+	margin-bottom: 75px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.item-title {
+	font-size: 15px;
+}
+
 .collection-type-container {
 	width: 50%;
 	margin: auto;

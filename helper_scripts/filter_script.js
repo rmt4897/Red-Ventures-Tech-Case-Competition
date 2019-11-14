@@ -66,7 +66,7 @@ function productionMovieCheckboxes() {
   }
 }
 
-// display the movie platform checkboxes 
+// display the movie platform checkboxes
 function platformMovieCheckboxes() {
   for (let i = 0; i < allMoviePlatforms.length; i++) {
     var name = allMoviePlatforms[i];
@@ -94,7 +94,7 @@ function movieDisplay() {
   finalMovieArray = [];
   uniqueArray = [];
   $(".display-container").empty()
-  // This huge if else statement will check which checkboxes are checked to know what to display 
+  // This huge if else statement will check which checkboxes are checked to know what to display
   if (!($('.production-checkboxes').is(':checked')) && !($('.platform-checkboxes').is(':checked'))) {
     for (let i = 0; i < defaultFilms.length; i++) {
       finalMovieArray[finalMovieArray.length] = defaultFilms[i];
@@ -105,7 +105,7 @@ function movieDisplay() {
         for (let j = 0; j < tempPlatformMovie.length; j++) {
           if (tempProductionMovie[i].title === tempPlatformMovie[j].title) {
             finalMovieArray[finalMovieArray.length] = tempProductionMovie[i];
-          }  
+          }
         }
       }
     } else if ($('.platform-checkboxes').is(':checked') && !($('.production-checkboxes').is(':checked'))) {
@@ -120,7 +120,7 @@ function movieDisplay() {
   // create a function that removes duplicates
 
   var list = [];
-  
+
   for (var i = 0; i < finalMovieArray.length; i++) {
     var dup = false;
     for (var j = 0; j < finalMovieArray.length; j++) {
@@ -136,7 +136,7 @@ function movieDisplay() {
 
   // This will add the elements into the HTML
   for (let i = 0; i < list.length; i++) {
-    $(".display-container").append("<div class='biggest-div'> <div class='2nd-div'> <div class='3rd1-div'> <div class='movie-title-display'>" + finalMovieArray[i].title + "</div> </div> <div class='3rd2-div'> <div class='movie-overview-display'>" + finalMovieArray[i].overview + " </div> </div> </div></div><br><br>");
+    $(".display-container").append("<div class='item'> <div class='item-image-container'> <div class='item-image-container'> <div class='item-image shine'></div> </div> <div class='item-title-container'> <div class='item-title'>" + finalMovieArray[i].title + " </div> </div> </div></div><br><br>");
   }
 
 
@@ -176,7 +176,7 @@ function updateMovieProductionFilters() {
 
 }
 
-// uses api to find all movies within a selected 
+// uses api to find all movies within a selected
 function updateMoviePlatformFilters() {
   var inputs = document.querySelectorAll("input.platform-checkboxes");
 
@@ -207,7 +207,7 @@ function updateMoviePlatformFilters() {
 
 // toggles between shows and movies and updates the checkboxes
 $(".collection-filter-type").click(function () {
- 
+
   $(".production-companies").empty();
   $(".streaming-platform").empty();
   var ifMovieActive = document.getElementsByClassName('collection-filter')[0].getAttribute('class')
@@ -273,7 +273,7 @@ $(".production-companies").click(function () {
     tempProductionMovie = []
     updateMovieProductionFilters();
   }
-  
+
   if (!($('.production-checkboxes').is(':checked')) && !($('.platform-checkboxes').is(':checked'))) {
     tempPlatformMovie = [];
     fetchAll();
