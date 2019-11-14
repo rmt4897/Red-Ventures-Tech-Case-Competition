@@ -43,11 +43,11 @@
 			</div>
 			<br><br>
 			<div class="production-companies">
-				Fox, Purple, Orange
+				Loading
 			</div>
 			<br>
 			<div class="streaming-platforms">
-				Available on: Netflix, HBO
+				Available on: Loading
 			</div>
 			<br><br>
 			<div class="overview">
@@ -56,21 +56,21 @@
 		</div>
 		<div id="extra-information" class="extra-information">
 			<a href="<?php echo 'https://www.imdb.com/title/' . $id . '/'; ?>">View on IMDB</a>
-			<hr>
+			<br>
 			<br><br>
 			<div class="voting-container">
 				<div class="vote-average">
-					8.5 / 10
+					Loading
 				</div>
 				<br>
 				<div class="vote-total">
-					1620934 votes
+					Loading
 				</div>
 			</div>
 			<br>
 			<div class="release-data-container">
 				<div class="release-data">
-					10/10/19
+					Loading
 				</div>
 			</div>
 		</div>
@@ -158,7 +158,7 @@
 							})
 						}
 					})
-				} 
+				}
 				else if (typeOfFilm === "show") {
 					db.collection("ShowDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
