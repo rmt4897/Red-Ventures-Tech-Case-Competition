@@ -33,7 +33,7 @@
 	</div>
 	<div class="main-container">
 		<div class="poster-container">
-			<div class="poster-image shine"></div>
+			<div id="poster-image" class="poster-image shine"></div>
 		</div>
 		<div class="information">
 			<a class="title">
@@ -82,6 +82,8 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../helper_scripts/imdb_crawler.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../helper_scripts/title_javascript.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../helper_scripts/get_movie_or_show_by_id.js"></script>
 	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
 

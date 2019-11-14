@@ -1,4 +1,3 @@
-$(function() {
-	$("#imdb_id").attr("data");
-	
-});
+function loadData(object) {
+	applyImdbThumbnail(, false, object.id);
+}

@@ -1,6 +1,6 @@
 // blank file that will retrieve a movie or show
 // when a function is called with parameters
-// (var type, var id), where 'type' is either 
+// (var type, var id), where 'type' is either
 // "movie" or "show" and id is an imdb id
 
 /* global retrieve specific movie or show */
@@ -8,7 +8,7 @@
 var _media;  // global variable declaration
 
 function media_by_type_and_id(_type, _id) { // function header, takes in 2 strings
-    
+
     var the_url = 'https://casecomp.konnectrv.io/' + _type + "/" + _id;  // setting up url for api
     var request = new XMLHttpRequest(); // setting up url/api call
 
@@ -41,9 +41,11 @@ function media_by_type_and_id(_type, _id) { // function header, takes in 2 strin
                 desc: data.overview
             };
         }
+
+		loadData(_media);
     }
     request.send(); // ...***...***...
 }
-// test function calls 
+// test function calls
 // media_by_type_and_id("movie", "tt8110640");
 // media_by_type_and_id("show", "tt1844624");
