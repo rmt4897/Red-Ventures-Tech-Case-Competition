@@ -26,7 +26,7 @@
 	<div class="nav-bar">
 		<div class="nav-container">
 			<div class="logo-container">
-
+				<img class="logo" src="imgs/logo.png">
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
@@ -60,6 +60,7 @@
 		<div class="display-panel">
 			<div class="collection-type-container">
 				<div class="collection-filter-type">
+					<img class="logo" src="imgs/logo.png">
 					<div class="collection-filter <?php echo $movies; ?>" onclick="javascript:swapActiveLargeFilter(0);">
 						Movies
 					</div>
