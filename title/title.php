@@ -112,14 +112,16 @@
 		const db = firebase.firestore();
 
 		$(document).ready(function () {
+			
+			if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function (position) {
-		
 				db.collection('VisitorLocation').add({
 					latitude: position.coords.latitude,
 					longitude: position.coords.longitude,
 				})
 			});
-
+		}
+			
 
 			var typeOfFilm = type;
 			var imdbID = id;

@@ -1,9 +1,9 @@
-/* function to sort by click count 
-   takes in array of 
+/* function to sort by click count
+   takes in array of
 */
 
 function sort_by_click_count(array) {
-    
+
     function sort_helper(array_a, array_b) {    // sort help function
         // sorting objects, this function specifies that we're sorting by vote_avg
         return (array_b.ClickCount - array_a.ClickCount); // sorting in descending order
