@@ -1,5 +1,4 @@
 <?php
-	# pull id and type from the URL
 	$id = $_GET['id'];
 	$type = $_GET['type'];
 ?>
@@ -9,23 +8,30 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta id="movie-data" data="<?php echo $id; ?>" type="<?php echo $type; ?>">
-	<title>MASFY - Movies and Shows for You</title>
+	<meta id="movie-data" data="<?php echo $id ?>" type="<?php echo $type ?>">
+	<title>Name of the App</title>
 	<link rel="stylesheet" href="../css.css">
 	<link rel="stylesheet" href="title.css">
-	<link rel="shortcut icon" type="image/x-icon" href="../imgs/favicon.ico">
+	<script type="text/javascript">
+		var id = $("#movie-data").attr("data");
+		var type = $("#movie-data").attr("type");
+	</script>
 </head>
 <body>
 	<div class="nav-bar">
 		<div class="nav-container">
 			<div class="logo-container">
+<<<<<<< HEAD
 				<a href="http://redventures.purple-techs.com"><img class="logo" src="../imgs/logo.png"></a>
+=======
+
+>>>>>>> f4be852be735b3a2e67493ac0184dcba0a9d730b
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
-				<a href="../show.php?type=movie" class="nav-link">All Movies</a>
-				<a href="../show.php?type=show" class="nav-link">All Shows</a>
-				<a href="../recommended.html" class="nav-link">Recommended</a>
+				<a href="" class="nav-link">All Movies</a>
+				<a href="" class="nav-link">All Shows</a>
+				<a href="" class="nav-link">Recommended</a>
 			</div>
 		</div>
 	</div>
@@ -33,7 +39,7 @@
 		<div class="poster-container">
 			<div id="poster-image" class="poster-image shine"></div>
 		</div>
-		<div id="information" class="information">
+		<div class="information">
 			<a class="title">
 				Loading
 			</a>
@@ -45,46 +51,42 @@
 			</div>
 			<br><br>
 			<div class="production-companies">
-				Loading
+				Fox, Purple, Orange
 			</div>
 			<br>
 			<div class="streaming-platforms">
-				Available on: Loading
+				Available on: Netflix, HBO
 			</div>
 			<br><br>
 			<div class="overview">
 				Loading
 			</div>
 		</div>
-		<div id="extra-information" class="extra-information">
+		<div class="extra-information">
 			<a href="<?php echo 'https://www.imdb.com/title/' . $id . '/'; ?>">View on IMDB</a>
-			<br>
+			<hr>
 			<br><br>
 			<div class="voting-container">
 				<div class="vote-average">
-					Loading
+					8.5 / 10
 				</div>
 				<br>
 				<div class="vote-total">
-					Loading
+					1620934 votes
 				</div>
 			</div>
 			<br>
 			<div class="release-data-container">
 				<div class="release-data">
-					Loading
+					10/10/19
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		var id = $("#movie-data").attr("data");
-		var type = $("#movie-data").attr("type");
-	</script>
 	<script type="text/javascript" charset="utf-8" src="../helper_scripts/imdb_crawler.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../title/title_javascript.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../helper_scripts/title_javascript.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../helper_scripts/get_movie_or_show_by_id.js"></script>
 	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
@@ -125,7 +127,7 @@
 
 		$(document).ready(function () {
 			var typeOfFilm = type;
-			var imbdID = id;
+			var imdbID = id;
 			var dupInDatabase = false;
 			var comparisonFilmObject;
 
@@ -160,7 +162,7 @@
 							})
 						}
 					})
-				}
+				} 
 				else if (typeOfFilm === "show") {
 					db.collection("ShowDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
