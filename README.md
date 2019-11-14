@@ -19,21 +19,17 @@ We built a web app
     * displays all relevant information such as an overview, rating, etc., when the movie/show is clicked by the user
 
 ## API Usage:
-    * dynamically created checkboxes for the filters by pulling individual elements from the API to reduce the amount of code written
-    * utilized API for every movie/show, overview, rating, etc. that was displayed (nothing was hard-coded)
+    * utilized API for all displayed information, movies, shows, images, etc
 
 ## Reporting/Customer Acquisition:
-    * utilized a no-sql database (firestore) to log user interactions with the website - for instance, the database will dynamically generate a document in a collection in the database which stores the title, imdb, and "clickcount" of how man times that movie/show that was clicked on. (if the show/movie was clicked the first time, then it would create a new document, if the show/movie already existed, then we increase clickcount by 1)
+    * utilized a no-sql database (Google Firebase Firestore) to log user interactions with the website - for instance, the database will dynamically generate a document in a collection in the database which stores the title, imdb, and "clickcount" of how man times that movie/show that was clicked on. (if the show/movie was clicked the first time, then it would create a new document, if the show/movie already existed, then we increase clickcount by 1)
     * implemented another page where business owners/analysts are able to visually see what is the most popular show/movie on the website (via the "clickcount" in the database) and see the location of the website users (via the heatmap)
 
 ## Scalability:
-    * Stated before, we utilized dynamically created checkboxes in which enables the website simply add the new production companies or platforms to the API witout having to edit the code (it utilizes loops)
-    * We also dynamiclly coded the information for the movie/show overview, title, rating, etc. so that it only pulls the specific movies that match the criteria of the filter or individual movie clicked (also demonstrating API mastery)
+    * Stated before, we utilized dynamically created checkboxes in which enables the website simply add the new production companies or platforms to the API witout having to edit the code
+    * We also dynamiclly coded the information for the movie/show overview, title, rating, etc. so that it only pulls the specific movies that match the criteria of the filter or individual movie clicked
     * Our functions were written to be able to seemlessly interpret and display any new aditions to the API
     * The database is able to store many users (the more data, the better; therefore, the more users, the more accurate data we retrieve, enabling the company to be more informed on their customer/audience)
-
-## Architecture:
-    * Beautifully designed headers, slideshows, animations, reviews, images, etc.
 
 ## Presentation: 
     See you all there! :D
