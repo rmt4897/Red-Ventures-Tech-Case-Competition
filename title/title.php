@@ -9,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta id="movie-data" data="<?php echo $id; ?>" type="<?php echo $type; ?>">
-	<title>Name of the App</title>
+	<title>MASFY - Movies and Shows for You</title>
 	<link rel="stylesheet" href="../css.css">
 	<link rel="stylesheet" href="title.css">
 </head>

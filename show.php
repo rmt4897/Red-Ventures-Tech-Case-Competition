@@ -16,7 +16,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta id="initial-type" data="<?php echo $type; ?>">
-	<title>Name of Apps</title>
+	<title>MASFY - Movies and Shows for You</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<link rel="stylesheet" href="css.css">
 	<link rel="stylesheet" href="show.css">
