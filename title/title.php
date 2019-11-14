@@ -113,14 +113,14 @@
 
 		$(document).ready(function () {
 			
-			if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function (position) {
+			function showPosition(position) {
 				db.collection('VisitorLocation').add({
 					latitude: position.coords.latitude,
 					longitude: position.coords.longitude,
 				})
-			});
-		}
+			}
+
+			navigator.geolocation.getCurrentPosition(showPosition);
 			
 
 			var typeOfFilm = type;
