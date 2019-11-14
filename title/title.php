@@ -133,7 +133,6 @@
 				// Begin accessing JSON data here
 				var data = JSON.parse(this.response)
 				comparisonFilmObject = data;
-
 				if (typeOfFilm === "movie") {
 					db.collection("MovieDataCollection").get().then((snapshot) => {
 						snapshot.docs.forEach(doc => {
@@ -154,14 +153,37 @@
 								snapshot.docs.forEach(doc => {
 									clickCounter = doc.data().ClickCount + 1
 									documentID = doc.id
-									db.collection('MovieDataCollection').doc(documentID).update({ClickCount: clickCounter,})
+									db.collection('MovieDataCollection').doc(documentID).update({ ClickCount: clickCounter, })
 								})
 							})
 						}
 					})
-				} else {
-
-
+				} 
+				else if (typeOfFilm === "show") {
+					db.collection("ShowDataCollection").get().then((snapshot) => {
+						snapshot.docs.forEach(doc => {
+							if (comparisonFilmObject.imdb === doc.data().imdb) {
+								dupInDatabase = true;
+							}
+						})
+						if (!dupInDatabase) {
+							db.collection("ShowDataCollection").add({
+								ClickCount: 1,
+								imdb: comparisonFilmObject.imdb,
+								title: comparisonFilmObject.title,
+							})
+						} else {
+							var documentID;
+							var clickCounter
+							db.collection('ShowDataCollection').where("imdb", "==", imdbID).get().then(snapshot => {
+								snapshot.docs.forEach(doc => {
+									clickCounter = doc.data().ClickCount + 1
+									documentID = doc.id
+									db.collection('ShowDataCollection').doc(documentID).update({ClickCount: clickCounter,})
+								})
+							})
+						}
+					})
 				}
 			}
 			platformRequest.send();
