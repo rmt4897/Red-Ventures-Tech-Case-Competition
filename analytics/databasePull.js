@@ -12,6 +12,9 @@ var firebaseConfig = {
 };
 
 var arrayofShowData = [];
+var sortedShows = [];
+var arrayofMovieData = [];
+var sortedMovies = [];
 
 
 
@@ -28,13 +31,27 @@ $(function () {
             arrayofShowData[arrayofShowData.length] = doc.data();
         })
         for (let i = 0; i < arrayofShowData.length; i++) {
-           console.log(arrayofShowData[i])
         }
 
-        var sorted = sort_by_click_Count(arrayofShowData);
-        console.log(sorted)
+        sortedShows= sort_by_click_count(arrayofShowData);
+        console.log(sortedShows)
 
     })
+
+    db.collection("MovieDataCollection").get().then((snapshot) => {
+        snapshot.docs.forEach(doc => {
+            arrayofMovieData[arrayofMovieData.length] = doc.data();
+        })
+        for (let i = 0; i < arrayofShowData.length; i++) {
+         
+        }
+
+        sortedMovies = sort_by_click_count(arrayofMovieData);
+        console.log(sortedMovies)
+
+    })
+
+
 })
 
 
