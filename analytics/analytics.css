@@ -1,0 +1,16 @@
+body {
+	background: white;
+}
+
+.heading {
+	width: 100%;
+	height: 80px;
+	background: deepskyblue;
+	text-align: center;
+}
+
+.heading-text {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
