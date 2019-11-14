@@ -30,9 +30,9 @@
 			</div>
 			<div class="spacer" width="50%"></div>
 			<div class="links-container">
-				<a href="" class="nav-link">All Movies</a>
-				<a href="" class="nav-link">All Shows</a>
-				<a href="" class="nav-link">Recommended</a>
+				<a href="show.php?type=movies" class="nav-link">All Movies</a>
+				<a href="show.php?type=shows" class="nav-link">All Shows</a>
+				<a href="recommended.html" class="nav-link">Recommended</a>
 			</div>
 		</div>
 	</div>
