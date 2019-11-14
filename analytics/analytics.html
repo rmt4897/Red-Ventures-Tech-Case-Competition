@@ -11,29 +11,23 @@
 			padding: 0;
 			height: 100%;
 		}
-
 		body {
 			font-family: sans-serif;
 		}
-
 		body * {
 			font-weight: 200;
 		}
-
 		h1 {
 			position: absolute;
 			background: white;
 			padding: 10px;
 		}
-
 		#map {
 			height: 100%;
 		}
-
 		.leaflet-container {
 			background: rgba(0, 0, 0, .8) !important;
 		}
-
 		h1 {
 			position: absolute;
 			background: black;
@@ -42,7 +36,6 @@
 			font-weight: 200;
 			z-index: 10000;
 		}
-
 		#all-examples-info {
 			position: absolute;
 			background: white;
@@ -100,7 +93,7 @@
 				// scales the radius based on map zoom
 				"scaleRadius": true,
 				// if set to false the heatmap uses the global maximum for colorization
-				// if activated: uses the data maximum within the current map boundaries 
+				// if activated: uses the data maximum within the current map boundaries
 				//   (there will always be a red spot with useLocalExtremas true)
 				"useLocalExtrema": true,
 				// which field name in your data represents the latitude - default "lat"
@@ -116,15 +109,11 @@
 				zoom: 4,
 				layers: [baseLayer, heatmapLayer]
 			});
-
 			// make accessible for debugging
 			layer = heatmapLayer;
-
 			location_data(testData);
-
 			layer.setData(masfy_api_data);
 		};
-
 		var masfy_api_data;
 		function location_data(our_data) {
 			masfy_api_data = {
@@ -140,17 +129,20 @@
 				};
 				api_array.push(newData);
 			}
-
 			masfy_api_data.data = api_array;
-
 		}
 		var test = {}
-
 		loadData(test);
-
 		console.log(masfy_api_data);
 		
 	</script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="../helper_scripts/click_count_sorter.js"></script>
+	<script type="text/javascript" charset="utf-8" src="databasePull.js"></script>
+
+
 </body>
 
 </html>
