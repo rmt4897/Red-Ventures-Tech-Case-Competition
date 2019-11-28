@@ -1,3 +1,12 @@
+    This git repository contains the project that Abhay Zala, David Lu, and I created to compete in Red Ventures Case Competition at UNC Chapel Hill. All three of us independently entered this competition and were randomly grouped together on the same team. 
+
+
+
+
+
+
+
+
 # Red-Ventures-Tech-Case-Competition
 ### By Abhay Zala, David Lu, & Michael Tyndall
 
