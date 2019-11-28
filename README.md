@@ -1,8 +1,8 @@
 ### Project Notes
 This git repository contains the project that Abhay Zala, David Lu, and I created to compete in Red Ventures Case Competition at UNC Chapel Hill. All three of us independently entered this competition and were randomly grouped together on the same team.r
 More descriptive information about our web app is within:
-* Our approach(#Our Approach:)
-* UI/UX Features(#UI/UX Features:)
+* Our approach(#our approach:)
+* UI/UX Features(#ui/ux features:)
 * API Usage(#API Usage:)
 * Reporting/Customer Acquisition(Reporting/Customer Acquisition:)
 * Scalability(#Scalability:)
