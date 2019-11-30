@@ -8,7 +8,11 @@ More descriptive information about our web app is within:
 * [Reporting and Customer Acquisition](#reporting-and-customer-acquisition)
 * [Scalability](#scalability)
 
+This project was an incredible experience for all of us. We had to work as a team to create our web app within the time allotted. Because we did not know each other going into the competition, we had to figure out all of our strengths and divide the work accordingly. This process was very smooth and easy for us, which allowed us to start on the project sooner. We all got along very well and worked extremely well as a team. Everyone's ideas and suggestions were considered, and the work was divided equally in regards to all of our past experiences and skills that we already had. 
 
+The day of the competition was awesome. We presented our project to Red Ventures judges at 10:20am. Then we waited to hear if we made it to the second round. At about 1:30pm we were informed that we were going to be working with another team for the second, and final, round. We were ecstatic to have made it to the second round because that meant that we achieved top 3 in the first round. The team that we were paired up with for the final round placed top 3 in the Red Ventures Business Case Competition. 
+
+The first picture is of us three and the second picture is of us three and the team that we were paired up with for the second round. 
 
 
 
